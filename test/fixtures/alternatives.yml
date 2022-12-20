@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comparison_values: MyString
+  summary: one
+
+two:
+  comparison_values: MyString
+  summary: two

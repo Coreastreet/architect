@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  creator: one
+  subject: 1
+  title: MyString
+  subtitle: MyString
+  description: MyText
+
+two:
+  creator: two
+  subject: 1
+  title: MyString
+  subtitle: MyString
+  description: MyText

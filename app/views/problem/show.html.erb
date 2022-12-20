@@ -1,0 +1,38 @@
+<div class="title py-6 text-center text-4xl bg-slate-200">
+  <div class="py-6">The Problem</div>
+</div>
+<div class="flex md:flex-row flex-col p-6 m-10">
+      <figure class="flex-1 flex flex-col justify-center">
+        <% if @image.representable? %>
+            <%= image_tag @image.representation(resize_to_limit: [300, 300]), class: "flex-1 object-contain" %>
+        <% end %>
+      </figure>
+      <div class="flex-1 py-8 px-16 flex flex-col justify-between align-center">
+          <blockquote class="text-2xl font-light italic text-center pb-10"><%= @problem.image_subtitle %></blockquote>
+          <div class="text-xl text-center">Description:</div>
+          <div class="p-2 text-lg flex-1 text-center">
+                <%= @problem.description.capitalize %>
+          </div>
+      </div>
+</div>
+<div class="bg-[#F7FCFC] flex flex-col md:flex-row">
+    <div class="px-16 py-6 flex flex-col items-center flex-1 bg-[beige]">
+        <div class="text-2xl text-center pt-4">
+            <div class="sb1"><%= @problem.simon_says %></div>
+        </div>
+    </div>
+    <div class="mx-10 p-6 flex flex-col items-center flex-1">
+        <div class="text-2xl text-center pt-4">
+            Did you know?
+        </div>
+        <div class="pt-6">
+            <%= @problem.did_you_know %>
+        </div>
+    </div>
+</div>
+<div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
+    <div class="flex-0"></div>
+    <%= link_to "Next >", theory_path(@lesson, 1),
+        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
+</div>
+

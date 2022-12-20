@@ -1,0 +1,165 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>392</x><y>72</y><w>168</w><h>264</h></coordinates><panel_attributes>&lt;&lt;User&gt;&gt;
+--
+- id: Long
+- Name: String
+- Email: String:Uniq
+- Password: Digest
+- Visitor References (Polymorphic:index)
+- Creator References
+(Polymorphic:index) 
+
+--
+(CRUD)
++ create()
++ read();
++ update();
++ delete();
++ message();
+
+--
+Responsibilities
+-- Open and close user account.
+-- Review and update their details.
+-- Send a message to another user</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>176</x><y>288</y><w>160</w><h>128</h></coordinates><panel_attributes>&lt;Creator&gt;
+--
+- loginable_type: "Creator"
+
+--
+Responsibilities
+-- Post and manage videos.
+-- Receive payment
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>144</y><w>72</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>184</x><y>104</y><w>160</w><h>96</h></coordinates><panel_attributes>&lt;&lt;Visitor&gt;&gt;
+--
+- loginable_type: "Visitor"
+
+--
+
+--
+Responsibilities
+-- No extra responsibilities.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>328</x><y>328</y><w>80</w><h>32</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>328</x><y>400</y><w>128</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=
+m2=0..*
+has many &gt;</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>360</y><w>160</w><h>208</h></coordinates><panel_attributes>&lt;&lt;Video&gt;&gt;
+--
+- Name: String
+- Length: Decimal
+- Views: Integer
+- Paywall: Boolean 
+- Content: Binary
+
+--
+- Start();
+- Stop();
+- RecordView();
+
+--
+Responsibilities
+- Store video file information.
+- Play on demand.
+- Record an interaction. </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>408</y><w>112</w><h>96</h></coordinates><panel_attributes>lt=-
+m1=
+m2=0..1
+has bank account &gt;</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>176</x><y>488</y><w>160</w><h>136</h></coordinates><panel_attributes>&lt;&lt;BankAccount&gt;&gt;
+--
+- Name: String
+- AccNo: Integer
+- BSB: Integer
+
+--
+- ReceivePayment();
+
+--
+Responsibilities
+-- Recieve payment from viewers.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>160</y><w>160</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=0..1
+has payment card &gt;</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>696</x><y>104</y><w>160</w><h>152</h></coordinates><panel_attributes>&lt;&lt;PaymentCard&gt;&gt;
+--
+- Name: String
+- CreditCard: Long
+- CVV: Short
+- Expiry: Short
+
+--
+- Pay();
+
+--
+Responsibilities
+-- Pay for access to content.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>696</x><y>288</y><w>184</w><h>208</h></coordinates><panel_attributes>&lt;&lt;VideoPackage&gt;&gt;
+--
+- Name: String
+- Description: Text
+- VideoCount: Integer
+- Price: Decimal
+- PromoActivated: Boolean
+
+--
+- Start();
+- Stop();
+- RecordView();
+
+--
+Responsibilities
+- Provide clear details of the videos 
+  and value offered to the viewer.
+- Check if a promotion is valid.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>592</x><y>400</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=
+belongs to &gt;</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>392</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=
+has one &gt;</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>976</x><y>320</y><w>160</w><h>176</h></coordinates><panel_attributes>&lt;&lt;Promotion&gt;&gt;
+--
+- Name: String
+- Discount: Integer (0-100)
+- Expiry: TimeDate
+- Code: String
+
+--
+- ReducePrice()
+- AmValid();
+
+--
+Responsibilities
+- Reduce the price before payment.
+- Check it is still valid()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>184</y><w>160</w><h>184</h></coordinates><panel_attributes>&lt;&lt;MessageLog&gt;&gt;
+--
+- MessageCount: Integer
+- ImageCount: Integer
+- SenderUserId: user_id
+- ReceiverUserId: user_id
+
+--
+- ShowMessages()
+- ClearOldMessages()
+
+--
+Responsibilities
+- Show message history
+- Clear old messages when log 
+  is taking too much storage.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>152</x><y>216</y><w>256</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1..2
+Belongs to and has two &gt;</panel_attributes><additional_attributes>10;20;300;20</additional_attributes></element><element><id>Relation</id><coordinates><x>40</x><y>360</y><w>80</w><h>88</h></coordinates><panel_attributes>lt=-
+m1=
+m2=0..*
+has_many &gt;</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>432</y><w>160</w><h>152</h></coordinates><panel_attributes>&lt;&lt;Message&gt;&gt;
+--
+- Content: Text
+- Attachment: File
+
+--
+- Send/Create()
+- Read
+- Delete()
+
+--
+Responsibilities
+-- Hold the content which the user 
+   wants to transfer.
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
