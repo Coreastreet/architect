@@ -35,14 +35,14 @@
             <div class="text-2xl text-center py-6">
                 Comparison:
             </div>
-            <div class="mx-10 px-6 pb-6 flex md:flex-row flex-col items-center">
+            <div class="mx-10 px-6 pb-6 flex md:flex-row flex-col items-center justify-center">
                 <% @summary_alternatives.each do |alternative| %>
-                    <div class="flex flex-col lg:flex-row w-1/2 px-6 pt-6">
+                    <div class="flex flex-col px-6 pt-6 items-center">
                         <% if alternative.image.representable? %>
-                            <%= image_tag alternative.image.representation(resize_to_limit: [300, 300]), class: "flex-1" %>
+                            <%= image_tag alternative.image.representation(resize_to_limit: [300, 300]), class: "flex-1 object-contain" %>
                         <% end %>
                         <% @summary.alternative_metrics.each_with_index do |metric, index| %>
-                            <div class="flex sm:flex-row flex-col"> 
+                            <div class="flex flex-row max-w-sm w-full"> 
                                 <div class="flex-1 p-4 border border-black"><%= metric %></div>
                                 <div class="flex-1 p-4 border border-black"><%= alternative.comparison_values[index] %></div>
                             </div>                      

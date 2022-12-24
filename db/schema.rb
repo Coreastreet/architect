@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_222132) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,7 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_222132) do
     t.datetime "updated_at", null: false
     t.bigint "subject_id", null: false
     t.string "objectives", default: [], array: true
-    t.integer "theory_chunks_count"
+    t.integer "theory_chunks_count", default: 0
     t.index ["subject_id"], name: "index_lessons_on_subject_id"
   end
 

@@ -1,0 +1,40 @@
+<%= turbo_frame_tag @lesson do %>
+    <%= form_with(model: @lesson, scope: :lesson, method: :patch, url: admin_lesson_path(@lesson), 
+        class: "px-6 flex flex-col min-w-[25rem] w-[50rem]") do |f| %>
+            <div class="border-2 rounded p-6 shadow-md bg-white flex flex-col items-center">
+                <div class="w-full mr-4 pt-1 text-xl font-semibold group-hover:underline flex-1 flex flex-col justify-between min-w-0">
+                    <label for="lesson_image_uploads" class="flex items-center flex-0 w-full justify-center hover:cursor-pointer mt-6">
+                        <figure>
+                            <% if @lesson.image.representable? %>
+                                    <%= image_tag(@lesson.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
+                                    class: "object-contain w-[12rem]") %>
+                            <% else %>
+                                <%= image_tag(image_path('upload_image.png'), class: "object-contain w-[12rem]",  data: { 'admin-target':'imageBox' }) %>
+                            <% end %>
+                        </figure>
+                        <%= f.file_field :image, type: "file", id: "lesson_image_uploads", accept: ".png, .jpeg, .jpg", 
+                                class: "image_file hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+                    </label>
+                    <div class="flex justify-between mt-6">
+                        <%= f.label :title, class: "text-lg self-center pt-2 pl-4 w-[8rem]" %>
+                        <%= f.text_field :title, class: "text-lg flex-1 pl-4
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                    </div>
+                    <div class="flex justify-between">
+                        <%= f.label :subtitle, class: "text-lg self-center pt-2 pl-4 w-[8rem]" %>
+                        <%= f.text_field :subtitle, class: "flex-1 mt-1.5 rounded text-lg
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                    </div>
+                    <div class="flex justify-between">
+                        <%= f.label :description, class: "text-lg self-center pt-2 pl-4 w-[8rem]" %>
+                        <%= f.text_area :description, class: "flex-1 mt-1.5 rounded text-lg
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                    </div>
+                </div>
+                <div class="ml-6 flex mt-4 justify-end">
+                    <%= f.submit "Update lesson", class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
+                    <%= link_to 'Cancel', admin_lesson_path(@lesson), class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                </div>
+            </div>
+    <% end %>
+<% end %>

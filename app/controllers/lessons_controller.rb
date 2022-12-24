@@ -10,7 +10,7 @@ class LessonsController < ApplicationController
   def show
     # identify which lesson is being asked for based on the slug.
     @lesson = Lesson.find_by(title: lesson_title_param)
-    @picture = @lesson.picture
+    @image = @lesson.image
   end
 
   private

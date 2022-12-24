@@ -1,0 +1,59 @@
+<%= turbo_frame_tag "new_lesson" do %>
+    <%= form_with(model: @new_lesson, scope: :lesson, url: admin_subject_lessons_path(@subject)) do |f| %>
+        <div class="px-6 flex flex-col min-w-[25rem] w-[50rem]">
+                <div class="border-2 rounded p-6 shadow-md bg-white flex flex-col items-center">
+                    <div class="w-full mr-4 pt-1 text-xl font-semibold group-hover:underline flex-1 flex flex-col justify-between min-w-0">
+                        <label for="lesson_image_uploads" class="flex items-center flex-0 w-full justify-center hover:cursor-pointer mt-6">
+                            <figure>
+                                <%= image_tag(image_path('upload_image.png'), class: "object-contain w-[12rem]",  data: { 'admin-target':'imageBox' }) %>
+                            </figure>
+                            <%= f.file_field :image, type: "file", id: "lesson_image_uploads", accept: ".png, .jpeg, .jpg", 
+                            class: "image_file hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+                        </label>
+                        <div class="flex justify-between mt-6 font-light
+                            text-md flex-1 px-4 border-0">
+                                <span class=" self-center pl-4 w-[10rem]">Title: </span>
+                                <%= f.text_field :title, class: "text-lg flex-1 pl-4
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                        </div>
+                        <div class="flex justify-between mt-6 font-light
+                            text-md flex-1 px-4 border-0">
+                                <span class="self-center pl-4 w-[10rem]">Subtitle: </span>
+                                <%= f.text_field :subtitle, class: "text-lg flex-1 pl-4
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                        </div>
+                        <div class="flex justify-between mt-6 font-light
+                            text-md flex-1 px-4 border-0">
+                                <span class=" self-center pl-4 w-[10rem]">Description: </span>
+                                <%= f.text_area :description, class: "text-lg flex-1 pl-4
+                            border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex justify-between mt-6 font-light text-md flex-1 pl-4 border-0" data-admin-target="objectivesBox">
+                                <div class="self-center pl-4 w-[10rem]">
+                                    Objectives:
+                                </div>
+                                <%= f.hidden_field :objectives, value: "[]" %>
+                                <ul class="flex-1 flex flex-col list-disc px-[1rem]">
+                                    <li class="mb-2 hidden">This is a hidden test</li>
+                                    <li><%= f.text_field :objective, class: "text-lg flex-1 pl-4 w-full
+                                        border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %></li>
+                                </ul>
+                            </div>
+                            <div data-action="click->admin#add_lesson_objective" class="self-end w-fit btn-blue text-sm
+                                    font-light px-4 py-2 border-black text-md rounded mr-4 mt-4 mb-4">
+                                + Add Objective
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 flex mt-4 justify-end w-full">
+                        <div class="flex">
+                            <%= f.submit "Create Lesson", class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
+                                <!-- btn-blue px-4 py-2 border-black text-md rounded mr-4 -->
+                            <%= link_to 'Cancel', admin_subject_lessons_path(@subject), class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                        </div>                    
+                    </div>
+                </div>
+        </div>
+    <% end %>
+<% end %>

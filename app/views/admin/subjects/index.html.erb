@@ -1,0 +1,48 @@
+        <div class="flex justify-between p-6">
+            <span class="text-2xl self-center">Subjects</span>
+            <button data-action="click->admin#toggle" class="btn btn-blue border-black bg-slate-grey text-xl font-light rounded-xl">
+                  New Subject
+            </button>
+          </div>
+          <div class="flex flex-row flex-wrap max-w-full">
+              <% @subjects.each do |subject| %>
+                  <%= turbo_frame_tag subject, class:"card mb-6" do %>
+                    <%= link_to admin_subject_lessons_path(subject), class: "w-fit border-2 group rounded mx-6 p-6 shadow-md hover:shadow-lg hover:border 
+                            hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col items-center" do %>
+                            <div class="flex-0">
+                                <% if subject.image.representable? %>
+                                    <%= image_tag(subject.image.representation(resize_to_limit: [300, 300]), class: "object-contain max-h-16") %>
+                                <% end %>
+                            </div>
+                            <span class="text-xl font-semibold group-hover:underline flex-1 pt-2">
+                                <%= subject.title.capitalize %>
+                            </span>
+                    <% end %>
+                    <div class="ml-6 flex mt-4 justify-center">
+                        <%= link_to 'Edit', edit_admin_subject_path(subject), class: "bg-gray-200 hover:bg-gray-300 
+                        text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded mr-4" %>
+                        <%= link_to 'Delete', admin_subject_path(subject), data: {turbo_method: :delete, turbo_confirm: "are you sure?"}, class: "bg-gray-200 hover:bg-gray-300 
+                            text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                    </div>
+                  <% end %>
+              <% end %>
+        </div>
+        <%= form_with(model: @new_subject, scope: :subject, url: admin_subjects_path, 
+            class: "p-6 flex flex-col creator_card") do |f| %>
+            <div class="py-6 text-2xl">New Subject:</div>
+            <div class="border-2 rounded p-6 shadow-md bg-white flex flex-col items-center">
+                <div class="flex justify-between w-full align-center">
+                    <div class="mr-4 pt-1 text-xl font-semibold group-hover:underline flex-1 flex flex-col justify-between">
+                      <%= f.text_field :title, class: "text-xl font-semibold 
+                          max-w-md border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                      <%= f.text_field :subtitle, class: "mb-1 mt-6 rounded text-xl font-semibold 
+                          max-w-6xl border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                    </div>
+                    <label for="subject_image_uploads" class="flex-0 w-60 hover:cursor-pointer">
+                          <%= image_tag(image_path('upload_image.png'), class: "image_display object-fill") %>        
+                          <%= f.file_field :image, type: "file", id: "subject_image_uploads", accept: ".png, .jpeg, .jpg", class: "image_file hidden" %>
+                    </label>
+                </div>
+            </div>
+            <%= f.submit "Create Subject", class: "self-end mt-4 btn btn-blue border-black bg-slate-grey text-xl font-light rounded-xl" %>
+        <% end %>

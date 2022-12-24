@@ -25,27 +25,18 @@
             Time/Cost savings
         </div>
     </div>
-    <%= link_to lessons_path("command-line"), class: "border-2 group rounded mx-10 p-6 shadow-md hover:shadow-lg hover:border 
-              hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col my-4" do %>
-        <div class="flex justify-between align-center">
-            <span class="text-xl font-semibold group-hover:underline flex-1">
-                Linux
-            </span>
-            <div class="flex-0">
-                <%= image_tag("linux.png", class: "object-contain max-h-16") %>
-            </div>
-        </div>
-    <% end %>
-    <%= link_to lessons_path("bash-scripting"), class: "border-2 group rounded mx-10 p-6 shadow-md hover:shadow-lg hover:border 
-              hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col my-4" do %>
-        <div class="flex justify-between align-center">
-            <span class="text-xl font-semibold group-hover:underline flex-1">
-                Shell Scripting
-            </span>
-            <div class="flex-0">
-                <%= image_tag("terminal.png", class: "object-contain max-h-16") %>
-            </div>
-        </div>
+    <% @subjects.each do |subject| %>
+            <%= link_to lessons_path(subject), class: "border-2 group rounded mx-10 p-6 shadow-md hover:shadow-lg hover:border 
+                    hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col my-4" do %>
+                <div class="flex justify-between align-center">
+                    <span class="text-xl font-semibold group-hover:underline flex-1">
+                        <%= subject.title.capitalize %>
+                    </span>
+                    <div class="flex-0">
+                        <%= image_tag(subject.image, class: "object-contain max-h-16") %>
+                    </div>
+                </div>
+            <% end %>
     <% end %>
 </div>
 

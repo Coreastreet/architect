@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
-  get 'problem/show'
-  get 'sources/show'
-  get 'summary/show'
-  get 'theory_chunks/show'
-  get 'scenario/show'
-  get 'lessons/index'
-  get 'lessons/show'
-  get 'device_users/send_message'
-  get 'emails/create'
-  get 'emails/update'
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  namespace :admin do 
+    get 'login', to: "sessions#new", as: "login"
+    post 'login', to: "sessions#create"
+    delete 'logout', to: "sessions#destroy", as: "logout"
+
+    resources :subjects, shallow: true, only: [:index, :create], param: "slug" do
+        resources :lessons, only: [:new, :create, :index, :edit, :destroy, :update, :show], param: "lesson_slug" do
+        end
+    end
+
+    resources :subjects, only: [:update, :destroy, :edit], param: "subject_slug"
+
+    resources :lessons, shallow: true, param: "slug", only: [] do 
+      resources :theory_chunks, only: [:index]
+    end
+
+  end
   # Defines the root path route ("/")
   root to: "subjects#index" 
   get '/:subject_slug/lessons', to: "lessons#index_by_subject", as: 'lessons' 

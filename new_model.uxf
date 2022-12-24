@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>0</x><y>184</y><w>160</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Creator&gt;&gt;
+<diagram program="umletino" version="15.0.0"><zoom_level>9</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>0</x><y>198</y><w>180</w><h>144</h></coordinates><panel_attributes>&lt;&lt;Creator&gt;&gt;
 --
 - Name:String
 - Email:String
@@ -9,7 +9,7 @@ Responsibilities
 -- Post and manage videos.
 -- Receive payment
 -- Add a new subject category
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>224</x><y>8</y><w>152</w><h>144</h></coordinates><panel_attributes>&lt;&lt;Email&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>0</y><w>171</w><h>162</h></coordinates><panel_attributes>&lt;&lt;Email&gt;&gt;
 --
 - Opt-out: Boolean
 - Email_address: string
@@ -22,10 +22,10 @@ Responsibilities
    subscribers (email)
 - Exclude them if they 
   have chosen to unsubscribe
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>360</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>405</x><y>396</y><w>135</w><h>45</h></coordinates><panel_attributes>lt=-
 m1=
 m2=0..*
-has many &gt;</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>464</x><y>248</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;Lesson&gt;&gt;
+has many &gt;</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>522</x><y>270</y><w>189</w><h>171</h></coordinates><panel_attributes>&lt;&lt;Lesson&gt;&gt;
 --
 - Title: String
 - Subtitle: String
@@ -39,7 +39,7 @@ has many &gt;</panel_attributes><additional_attributes>10;20;130;20</additional_
 --
 Responsibilities
 -- 
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>208</x><y>272</y><w>160</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Subject&gt;&gt;
+-- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>234</x><y>297</y><w>180</w><h>144</h></coordinates><panel_attributes>&lt;&lt;Subject&gt;&gt;
 --
 - Title: string
 - Subtitle: String
@@ -50,27 +50,13 @@ Responsibilities
 Responsibilities
 -- Post and manage videos.
 -- Receive payment
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>96</x><y>304</y><w>128</w><h>64</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>108</x><y>333</y><w>144</w><h>72</h></coordinates><panel_attributes>lt=-
 m1=
 m2=0..*
-has_many &gt;</panel_attributes><additional_attributes>10;10;140;60</additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>120</y><w>120</w><h>144</h></coordinates><panel_attributes>
-m1=
-m2= 1..*
-has many &gt;</panel_attributes><additional_attributes>10;160;110;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>632</x><y>0</y><w>160</w><h>128</h></coordinates><panel_attributes>&lt;&lt;LessonObjective&gt;&gt;
---
-- Objective: string
-- Main: Boolean
-- Anwser: texr
-- 
---
-#Operation(i: int): int
-
---
-Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>288</y><w>144</w><h>40</h></coordinates><panel_attributes>
+has_many &gt;</panel_attributes><additional_attributes>10;10;140;60</additional_attributes></element><element><id>Relation</id><coordinates><x>702</x><y>315</y><w>162</w><h>45</h></coordinates><panel_attributes>
 m1=
 m2=
-has one &gt;</panel_attributes><additional_attributes>160;20;10;30</additional_attributes></element><element><id>UMLClass</id><coordinates><x>752</x><y>176</y><w>128</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Scenario&gt;&gt;
+has one &gt;</panel_attributes><additional_attributes>160;20;10;30</additional_attributes></element><element><id>UMLClass</id><coordinates><x>846</x><y>189</y><w>144</w><h>144</h></coordinates><panel_attributes>&lt;&lt;Problem&gt;&gt;
 --
 - Question: String
 - Scenario: Text
@@ -82,10 +68,10 @@ has one &gt;</panel_attributes><additional_attributes>160;20;10;30</additional_a
 
 --
 Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>352</y><w>120</w><h>80</h></coordinates><panel_attributes>
+-- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>702</x><y>387</y><w>135</w><h>90</h></coordinates><panel_attributes>
 m1=1..*
 m2=
-has many &gt;</panel_attributes><additional_attributes>130;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>728</x><y>376</y><w>168</w><h>160</h></coordinates><panel_attributes>&lt;&lt;TheoryChunk&gt;&gt;
+has many &gt;</panel_attributes><additional_attributes>130;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>819</x><y>414</y><w>189</w><h>180</h></coordinates><panel_attributes>&lt;&lt;TheoryChunk&gt;&gt;
 --
 - Mini-Goal : String
 - Tools: Action-Text
@@ -97,7 +83,7 @@ has many &gt;</panel_attributes><additional_attributes>130;80;10;10</additional_
 
 --
 Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>488</y><w>200</w><h>160</h></coordinates><panel_attributes>&lt;&lt;Summary&gt;&gt;
+-- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>567</x><y>540</y><w>225</w><h>180</h></coordinates><panel_attributes>&lt;&lt;Summary&gt;&gt;
 --
 - Steps to solution Image: active_storage
 - The Alternative: active_storage
@@ -110,25 +96,10 @@ Responsibilities
 
 --
 Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>392</y><w>80</w><h>112</h></coordinates><panel_attributes>
+-- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>603</x><y>432</y><w>90</w><h>126</h></coordinates><panel_attributes>
 m1=
 m2=
-has one &gt;</panel_attributes><additional_attributes>30;120;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>448</y><w>160</w><h>128</h></coordinates><panel_attributes>&lt;&lt;Source&gt;&gt;
---
-- Website_link: string
-- Quality: integer
-- Short Review: text
-
- 
---
-#Operation(i: int): int
-
---
-Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>392</x><y>504</y><w>128</w><h>56</h></coordinates><panel_attributes>
-m1=1..*
-m2=
-has many &gt;</panel_attributes><additional_attributes>10;10;140;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>408</x><y>48</y><w>152</w><h>136</h></coordinates><panel_attributes>&lt;&lt;Device&gt;&gt;
+has one &gt;</panel_attributes><additional_attributes>30;120;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>459</x><y>45</y><w>171</w><h>153</h></coordinates><panel_attributes>&lt;&lt;Device&gt;&gt;
 --
 - Browser: String
 - Device hardware: String
@@ -141,13 +112,13 @@ Responsibilities
   chat identity through 
   device info (Chat)
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>888</x><y>464</y><w>120</w><h>80</h></coordinates><panel_attributes>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>999</x><y>513</y><w>135</w><h>90</h></coordinates><panel_attributes>
 m1=1..*
 m2=
-has many &gt;</panel_attributes><additional_attributes>130;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>528</y><w>104</w><h>128</h></coordinates><panel_attributes>
+has many &gt;</panel_attributes><additional_attributes>130;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>891</x><y>585</y><w>117</w><h>144</h></coordinates><panel_attributes>
 m1=1..*
 m2=
-has many &gt;</panel_attributes><additional_attributes>70;140;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>792</x><y>640</y><w>168</w><h>128</h></coordinates><panel_attributes>&lt;&lt;TheoryPoint&gt;&gt;
+has many &gt;</panel_attributes><additional_attributes>70;140;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>891</x><y>711</y><w>189</w><h>144</h></coordinates><panel_attributes>&lt;&lt;TheoryPoint&gt;&gt;
 --
 - Title:string
 - Description: Text
@@ -158,7 +129,7 @@ has many &gt;</panel_attributes><additional_attributes>70;140;10;10</additional_
 
 --
 Responsibilities
--- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>992</x><y>528</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;Exercise&gt;&gt;
+-- </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1116</x><y>585</y><w>189</w><h>171</h></coordinates><panel_attributes>&lt;&lt;Exercise&gt;&gt;
 --
 - Title:string
 - Description: Text
