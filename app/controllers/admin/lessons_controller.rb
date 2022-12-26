@@ -58,8 +58,6 @@ class Admin::LessonsController < ApplicationController
     params.require(:lesson).permit(:title, :subtitle, :description, :image, :objectives)
   end
 
-  private
-
   def subject_title_param
     title = deslug(params[:subject_slug])
   end

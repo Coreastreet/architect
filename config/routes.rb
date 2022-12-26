@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'problems/show'
+  end
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   namespace :admin do 
@@ -14,9 +17,9 @@ Rails.application.routes.draw do
     resources :subjects, only: [:update, :destroy, :edit], param: "subject_slug"
 
     resources :lessons, shallow: true, param: "slug", only: [] do 
-      resources :theory_chunks, only: [:index]
+      resources :pages, only: [:index, :show]
+      get "problem", to: "problems#show"
     end
-
   end
   # Defines the root path route ("/")
   root to: "subjects#index" 

@@ -13,7 +13,7 @@
                                         <%= lesson.title.capitalize %>
                                     </span>
                                     <span class="text-xl">
-                                        <%= "#{lesson.theory_chunks_count} pages" %>
+                                        <%= "#{lesson.lesson_pages_count} pages" %>
                                     </span>
                                 </div>
                     <% end %>
@@ -22,4 +22,3 @@
         <%= turbo_frame_tag "show_lesson", target: "_top" %>           
         <%= turbo_frame_tag "new_lesson", target: "_top" %>           
   </div>
-</div>

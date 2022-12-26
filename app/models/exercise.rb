@@ -1,3 +1,3 @@
 class Exercise < ApplicationRecord
-  belongs_to :theory_chunk
+  belongs_to :lesson_page
 end

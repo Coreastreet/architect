@@ -1,5 +1,5 @@
 class TheoryPoint < ApplicationRecord
-  belongs_to :theory_chunk
+  belongs_to :lesson_page
 
   has_one_attached :image
 end

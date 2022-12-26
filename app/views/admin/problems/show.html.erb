@@ -1,0 +1,47 @@
+<div class="flex justify-between p-6">
+  <span class="text-2xl self-center">
+      <%= link_to "Lessons", admin_lesson_path(@lesson), class: "hover:underline hover:text-blue-700" %>
+      <%= " > #{@lesson.title} > #{@problem.title}" %>
+  </span>
+  <span>
+      <%= link_to "Full Screen Mode", root_path, class: "btn btn-blue border-black bg-slate-grey text-xl font-light rounded-xl mr-4" %>
+      <%= link_to "Update Page", root_path, data: { turbo_frame: "new_lesson" }, 
+          class: "btn btn-blue border-black bg-slate-grey text-xl font-light rounded-xl" %>
+  </span>
+</div>
+<div class="flex flex-row items-start px-6">
+      <div class="flex flex-row flex-nowrap">
+          <div class="mb-6 w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+          hover:bg-emerald-50 hover:border-l-4 bg-white flex text-xl font-semibold hover:underline hover:cursor-pointer">
+              Problem
+          </div>
+          <% @lesson_pages.each do |lesson_page| %>
+                  <%= link_to admin_lesson_path(lesson_page), class: "mb-6 w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+                          hover:bg-emerald-50 hover:border-l-4 bg-white flex items-center flex-col h-fit", data: { turbo_frame: "show_lesson" } do %>
+                              <div class="w-full flex justify-between items-center">
+                                  <span class="text-xl font-semibold group-hover:underline flex-1">
+                                      <%= lesson_page.title.capitalize %>
+                                  </span>
+                              </div>
+                  <% end %>
+          <% end %>
+          <div class="mb-6  w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+          hover:bg-emerald-50 hover:border-l-4 bg-white flex text-xl font-semibold hover:underline hover:cursor-pointer">
+              Testing Page 4
+          </div>
+          <div class="mb-6  w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+          hover:bg-emerald-50 hover:border-l-4 bg-white flex text-xl font-semibold hover:underline hover:cursor-pointer">
+              Testing Page 5
+          </div>
+          <div class="mb-6  w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+          hover:bg-emerald-50 hover:border-l-4 bg-white flex text-xl font-semibold hover:underline hover:cursor-pointer">
+              Testing Page 6
+          </div>
+          <div class="mb-6  w-[15rem] flex-0 border-2 group rounded mr-4 px-6 py-2 shadow-md hover:shadow-lg hover:border 
+          hover:bg-emerald-50 hover:border-l-4 bg-white flex text-xl font-semibold hover:underline hover:cursor-pointer">
+              Summary
+          </div>
+      </div>
+      <%= turbo_frame_tag "show_lesson", target: "_top" %>           
+      <%= turbo_frame_tag "new_lesson", target: "_top" %>           
+</div>

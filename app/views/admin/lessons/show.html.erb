@@ -43,7 +43,8 @@
                             <%= link_to "Delete", admin_lesson_path(@lesson), data: { "turbo-method": :delete, turbo_confirm: "are you sure?" }, class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
                         </div>
                         <div class="flex">
-                            <%= link_to "View Pages", admin_lesson_theory_chunks_path(@lesson), class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
+                            <%= link_to "View Pages", (@lesson.last_page_visited == 0) ? admin_lesson_problem_path(@lesson) : admin_page_path(@lesson.last_page_visited), 
+                                class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
                             <%= link_to 'Cancel', admin_subject_lessons_path(@subject), class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
                         </div>                    
                     </div>

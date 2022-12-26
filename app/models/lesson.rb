@@ -6,7 +6,7 @@ class Lesson < ApplicationRecord
 
   has_one_attached :image
 
-  has_many :theory_chunks
+  has_many :lesson_pages
   has_many :lesson_objectives
 
   def to_param

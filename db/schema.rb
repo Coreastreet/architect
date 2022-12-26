@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,8 +81,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
     t.text "solution"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "theory_chunk_id", null: false
-    t.index ["theory_chunk_id"], name: "index_exercises_on_theory_chunk_id"
+    t.bigint "lesson_page_id", null: false
+    t.index ["lesson_page_id"], name: "index_exercises_on_lesson_page_id"
+  end
+
+  create_table "lesson_pages", force: :cascade do |t|
+    t.string "mini_goal"
+    t.integer "page_index"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.bigint "lesson_id", null: false
+    t.index ["lesson_id"], name: "index_lesson_pages_on_lesson_id"
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -93,7 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
     t.datetime "updated_at", null: false
     t.bigint "subject_id", null: false
     t.string "objectives", default: [], array: true
-    t.integer "theory_chunks_count", default: 0
+    t.integer "lesson_pages_count", default: 0
+    t.integer "last_page_visited", default: 0
     t.index ["subject_id"], name: "index_lessons_on_subject_id"
   end
 
@@ -105,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
     t.datetime "updated_at", null: false
     t.text "did_you_know"
     t.text "simon_says"
+    t.string "title"
     t.index ["lesson_id"], name: "index_problems_on_lesson_id"
   end
 
@@ -129,24 +141,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
     t.index ["lesson_id"], name: "index_summaries_on_lesson_id"
   end
 
-  create_table "theory_chunks", force: :cascade do |t|
-    t.string "mini_goal"
-    t.integer "page_index"
-    t.bigint "lesson_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title"
-    t.index ["lesson_id"], name: "index_theory_chunks_on_lesson_id"
-  end
-
   create_table "theory_points", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "theory_chunk_id", null: false
     t.integer "order_index"
-    t.index ["theory_chunk_id"], name: "index_theory_points_on_theory_chunk_id"
+    t.bigint "lesson_page_id", null: false
+    t.index ["lesson_page_id"], name: "index_theory_points_on_lesson_page_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -164,11 +166,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_200813) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alternatives", "summaries"
-  add_foreign_key "exercises", "theory_chunks"
+  add_foreign_key "exercises", "lesson_pages"
+  add_foreign_key "lesson_pages", "lessons"
   add_foreign_key "lessons", "subjects"
   add_foreign_key "problems", "lessons"
   add_foreign_key "subjects", "creators"
   add_foreign_key "summaries", "lessons"
-  add_foreign_key "theory_chunks", "lessons"
-  add_foreign_key "theory_points", "theory_chunks"
+  add_foreign_key "theory_points", "lesson_pages"
 end
