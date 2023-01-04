@@ -1,11 +1,11 @@
-class TheoryChunksController < ApplicationController
+class LessonPagesController < ApplicationController
   def show
-      @page_index = page_index_param[:theory_id].to_i      
+      @page_index = page_index_param[:lesson_page_id].to_i      
 
       @lesson = Lesson.find_by(title: lesson_title_param)
-      @theory_chunk = TheoryChunk.find_by(lesson_id: @lesson.id, page_index: (@page_index - 1) )
-      @theory_points = @theory_chunk.theory_points.order(:order_index)
-      @exercises = @theory_chunk.exercises
+      @page = LessonPage.find(@lesson.page_id_order[(@page_index - 1)])
+      @theory_points = @page.theory_points.order(:order_index)
+      @exercises = @page.exercises
   end
 
   private
@@ -16,10 +16,11 @@ class TheoryChunksController < ApplicationController
 
   def lesson_title_param
     title = deslug(params[:lesson_slug])
+    title.capitalize
   end
 
   def page_index_param
-    params.permit(:theory_id)
+    params.permit(:lesson_page_id)
   end
 
   def deslug(str)

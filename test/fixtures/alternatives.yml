@@ -1,9 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  comparison_values: MyString
-  summary: one
+  title: MyString
+  time_saved: 1
+  money_saved: 1
+  description: MyText
+  use_case: MyString
 
 two:
-  comparison_values: MyString
-  summary: two
+  title: MyString
+  time_saved: 1
+  money_saved: 1
+  description: MyText
+  use_case: MyString

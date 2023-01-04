@@ -1,0 +1,89 @@
+<div class="title py-6 text-center text-4xl bg-slate-200">
+  <div class="py-6 editable"><%= @page.title %></div>
+</div>
+<% @theory_points.each_with_index do |theory_point, index| %>  
+<% if (index.even?) %>
+  <div class="py-6 bg-[#F7FCFC]">
+      <div class="flex flex-col md:flex-row mb-4">
+          <div class="mx-10 flex flex-col items-center">
+              <figure class="max-w-[35vw]">
+                  <% if theory_point.image.representable? %>
+                      <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]),
+                          class: "object-fill") %>
+                  <% else %>
+                      <%= image_tag(image_path('upload_image.png'), class: "object-fill") %>
+                  <% end %>
+              </figure>
+          </div>
+          <div class="mr-10 pb-6 flex flex-col items-center flex-1">
+              <div class="text-2xl text-center pt-1">
+                  <%= theory_point.title %>
+              </div>
+              <div class="w-full pt-4 text-md">
+                  <%= theory_point.description&.capitalize %>
+              </div>
+          </div>
+      </div>
+  </div>
+<% else %>
+      <div class="py-6 bg-white">
+          <div class="flex flex-col md:flex-row mb-4 ">
+                  <div class="mx-10 pb-6 flex flex-col items-center flex-1">
+                      <div class="text-2xl text-center pt-1">
+                          <%= theory_point.title %>
+                      </div>
+                      <div class="pt-4 text-md w-full">
+                          <%= theory_point.description&.capitalize %>
+                      </div>
+                  </div>
+                  <div class="mr-10 flex flex-col items-center">
+                      <figure class="max-w-[35vw]">
+                          <% if theory_point.image.representable? %>
+                              <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]),
+                                  class: "object-fill") %>
+                          <% else %>
+                              <%= image_tag(image_path('upload_image.png'), class: "object-fill") %>
+                          <% end %>
+                      </figure>
+                  </div>
+          </div>
+      </div>
+  <% end %>
+<% end %>
+<hr class="bg-slate-300 border-slate-300">
+<div class="p-6 flex flex-1 flex-col items-center bg-[#F7FCFC]">
+  <div class="text-2xl text-center pt-4">
+      Exercises:
+  </div>
+  <ol class="p-6 list-decimal text-lg text-center">
+      <% @page.exercises.each do |exercise| %>
+          <li><span class=""><%= exercise %></span></li>
+      <% end %>
+  </ol>
+</div>
+<div class="p-6 flex-1 flex flex-col items-center bg-white">
+  <div class="text-2xl text-center pt-4">
+      Answers:
+  </div>
+  <ol class="p-6 list-decimal text-lg text-center">
+      <% @page.answers.each do |answer| %>
+          <li><span class=""><%= answer %></span></li>
+      <% end %>
+  </ol>
+</div>
+<div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
+  <% if (@page_index == 1) %>
+      <%= link_to "< Prev", problem_path(@lesson),
+       class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
+  <% else %>
+      <%= link_to "< Prev", lesson_page_path(@lesson, (@page_index-1)),
+      class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
+  <% end %>
+  <% if (@page_index >= @theory_points.count) %>
+      <%= link_to "Next >", summary_path(@lesson),
+      class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
+  <% else %>
+    <%= link_to "Next >", lesson_page_path(@lesson, (@page_index+1)),
+        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
+  <% end %>
+</div>

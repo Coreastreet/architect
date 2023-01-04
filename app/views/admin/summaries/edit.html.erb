@@ -1,0 +1,154 @@
+<!--
+<%= turbo_frame_tag "edit_summary_page" do %>
+    <%= form_with(model: @summary, scope: :summary, method: :patch, url: admin_lesson_summary_path(@lesson), 
+        data: { 'admin-target': "editLessonSummaryForm" } ) do |f| %>
+        <div class="title py-6 text-center text-4xl bg-slate-200">
+        <div class="py-6">Summary</div>
+        </div>
+        <div class="bg-[#F7FCFC] flex md:flex-row flex-col p-6">
+            <label for="aftermath_image_uploads" class="flex-1 flex flex-col justify-center hover:cursor-pointer">
+                <% if @aftermath_image.representable? %>
+                        <%= image_tag(@aftermath_image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
+                        class: "object-fill flex-1 w-1/2 p-8") %>
+                <% else %>
+                    <%= image_tag(image_path('upload_image.png'), class: "object-fill",  data: { 'admin-target':'imageBox' }) %>
+                <% end %>
+                <%= f.file_field :aftermath_image, type: "file", id: "aftermath_image_uploads", accept: ".png, .jpeg, .jpg", 
+                        class: "image_fill hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+            </label>
+            <div class="flex-1 px-4 flex flex-col justify-between align-center">
+                <div class="text-xl text-center pb-4">Aftermath:</div>
+                <%= f.text_area :aftermath, class: "p-2 text-lg flex-1 text-center" %>
+            </div>
+        </div>
+        <div class="bg-white flex flex-col md:flex-row">
+            <div class="p-6 flex flex-col items-center flex-1 justify-between">
+                <div class="flex flex-col w-full">
+                    <div class="text-2xl text-center pt-4">
+                        Key Points:
+                    </div>
+                    <ul class="pt-6 list-disc text-lg text-center w-full key-points" data-admin-target="summaryKeyPointsInput">
+                        <% if (@summary.key_points.count == 0) %>
+                                <%= f.hidden_field :key_points, value: '[]' %>
+                                <li class="mb-1"><input class="summary_source border-none w-[95%]" type="text" name="summary[key_point]" value="" ></li>
+                        <% else %>
+                            <%= f.hidden_field :key_points, value: @summary.key_points.to_json %>
+                            <% @summary.key_points.each do |key_point| %>
+                                <li class="mb-1">
+                                    <input class="summary_source border-none w-fit w-max-[95%]" type="text" name="summary[key_point]" value="<%= key_point.capitalize %>" >
+                                    <span class="cross" data-action="click->admin#remove_bullet">&#9587;</span>
+                                </li>
+                            <% end %>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="flex flex-col w-full">
+                        <%= f.text_area :key_point, class: "max-h-[4.5rem] flex summary_key_point flex-1 pl-4 w-full
+                            border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummaryKeyPoint" }, rows: 3 %>
+                        <div class="flex self-end">
+                            <div data-action="click->admin#update_summary_key_points" class="w-fit btn-blue text-sm
+                                    font-light px-4 py-2 border-black text-md rounded mt-4 hover:cursor-pointer align-end">
+                                Update Key Points
+                            </div>
+                            <div data-action="click->admin#add_summary_key_point" class="h-fit ml-2 w-fit btn-blue text-sm
+                                    font-light px-4 py-2 border-black text-md rounded mt-4 hover:cursor-pointer">
+                                + Add Key Point
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="p-6 flex flex-col items-center flex-1 bg-[beige]">
+                    <div class="text-2xl text-center py-4">
+                        Process Diagram:
+                    </div>
+                    <label for="process_diagram_uploads" class="flex-1 flex flex-col justify-center hover:cursor-pointer">
+                        <% if @process_diagram.representable? %>
+                                <%= image_tag(@process_diagram.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox2' },
+                                class: "flex-1 border border-black border-4 object-fill my-4") %>
+                        <% else %>
+                                <%= image_tag(image_path('upload_image.png'), class: "object-contain",  data: { 'admin-target':'imageBox2' }) %>
+                        <% end %>
+                        <%= f.file_field :process_diagram, type: "file", id: "process_diagram_uploads", accept: ".png, .jpeg, .jpg", 
+                                class: "image_fill hidden", data: { 'action': 'change->admin#display_image2', 'admin-target':'imageInput2' } %>
+                    </label>
+            </div>
+        </div>
+        <div class="bg-[#F7FCFC] pt-4">
+            <div class="text-2xl justify-center py-6 flex">
+                <span class="mr-4">Money and Time saved:</span>
+                <%= link_to "New Alternative", new_admin_summary_alternative_path(@summary), 
+                    data: { turbo_frame: "new_alternative" }, class: "btn btn-blue border-black text-sm font-light rounded" %>
+            </div>
+            <div class="mx-10 px-6 pb-6 flex flex-col items-center justify-center">
+                <% if (@summary.alternatives_count > 0) %>
+                    <% @summary_alternatives.each do |alternative| %>
+                            <div class="flex mx-6 mb-6 items-center border border-slate-300 rounded bg-white w-full">
+                                <div class="flex flex-col p-4 items-center"> 
+                                    <span class="text-lg font-semibold pb-2"><%= alternative.title %></span>
+                                    <span>Money Saved: $<%= alternative.money_saved %></span>
+                                    <span>Time (hours) saved: <%= alternative.time_saved %></span>
+                                    <span>Use cases:</span>
+                                    <span><%= alternative.use_case %></span>
+                                    <%= link_to 'Delete', admin_summary_alternative_path(@summary, alternative), data: {turbo_method: :delete, turbo_confirm: "are you sure?"}, 
+                                        class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                                </div>     
+                                <div class="flex pl-4 self-start flex-1">
+                                    <div class="flex-col flex flex-1 mr-4">
+                                        <span class="py-4">Pros:</span>
+                                        <span><%= alternative.pros %></span>
+                                    </div>
+                                    <div class="flex-col flex flex-1 mr-4">
+                                        <span class="py-4">Cons:</span>
+                                        <span><%= alternative.pros %></span>
+                                    </div>
+                                </div>
+                            </div>                  
+                    <% end %>
+                <% end %>
+                <%= turbo_frame_tag "new_alternative", target: "_top" %>           
+            </div>
+        </div>  
+        <hr class="border-slate-400 bg-slate-400">
+        <div class="bg-[#F7FCFC]">
+            <div class="mx-10 p-6 flex flex-col items-center list-holder">
+                <div class="text-2xl text-center pt-4">
+                    Further Reading:
+                </div>
+                <div class="flex flex-col w-full">
+                    <div class="text-2xl text-center pt-4">
+                        Key Points:
+                    </div>
+                    <ul class="py-6 list-disc text-lg text-center w-full key-points" data-admin-target="summarySourcesInput">
+                        <% if (@summary.sources.count == 0) %>
+                                <%= f.hidden_field :sources, value: '[]' %>
+                                <li class="mb-1"><input class="summary_source border-none w-[95%] bg-transparent" type="text" name="summary[source]" value="" ></li>
+                        <% else %>
+                            <%= f.hidden_field :sources, value: @summary.sources.to_json %>
+                            <% @summary.sources.each do |source| %>
+                                <li class="mb-1">
+                                    <input class="summary_source border-none w-[95%] bg-transparent" type="text" name="summary[source]" value="<%= source.capitalize %>" >
+                                    <span class="cross" data-action="click->admin#remove_bullet">&#9587;</span>
+                                </li>
+                            <% end %>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="flex flex-col w-full">
+                    <%= f.text_area :source, value: "", class: "max-h-[4.5rem] flex summary_source flex-1 pl-4 w-full
+                        border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummarySource" }, rows: 3 %>
+                    <div class="flex self-end">
+                        <div data-action="click->admin#update_summary_sources" class="w-fit btn-blue text-sm
+                                font-light px-4 py-2 border-black text-md rounded mt-4 hover:cursor-pointer align-end">
+                            Update Sources
+                        </div>
+                        <div data-action="click->admin#add_summary_source" class="h-fit ml-2 w-fit btn-blue text-sm
+                                font-light px-4 py-2 border-black text-md rounded mt-4 hover:cursor-pointer">
+                            + Add Sources
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>
+    -->

@@ -1,71 +1,87 @@
 <div class="title py-6 text-center text-4xl bg-slate-200">
-  <div class="py-6">Summary</div>
+<div class="py-6">Summary</div>
 </div>
-<div class="bg-[#F7FCFC] flex md:flex-row flex-col p-6 mx-10 mt-6">
-        <% if @aftermath_image.representable? %>
-            <%= image_tag @aftermath_image.representation(resize_to_limit: [300, 300]), class: "flex-1" %>
-        <% end %>
-      <div class="flex-1 pt-10 px-16 flex flex-col justify-between align-center">
-          <div class="text-xl text-center">Aftermath:</div>
-          <div class="p-2 text-lg flex-1 text-center">
+<div class="bg-[#F7FCFC] flex md:flex-row flex-col p-6">
+    <% if @aftermath_image.representable? %>
+        <%= image_tag @aftermath_image.representation(resize_to_limit: [300, 300]), 
+            class: "flex-1 w-1/2 p-8" %>
+    <% else %>
+        <%= image_tag(image_path('upload_image.png'), class: "object-contain w-1/2 p-8") %>
+    <% end %>
+    <div class="flex-1 pt-10 px-16 flex flex-col justify-between align-center">
+        <div class="text-xl text-center">Aftermath:</div>
+        <div class="p-2 text-lg flex-1 text-center">
                 <%= @summary.aftermath.capitalize %>
-          </div>
-      </div>
+        </div>
+    </div>
 </div>
 <div class="bg-white flex flex-col md:flex-row">
-  <div class="px-16 py-6 flex flex-col items-center flex-1 bg-[beige]">
-         <% if @aftermath_image.representable? %>
-            <%= image_tag @aftermath_image.representation(resize_to_limit: [300, 300]), 
-                class: "flex-1 border border-black border-4 object-fill my-4" %>
-         <% end %>
-  </div>
-  <div class="mx-10 p-6 flex flex-col items-center flex-1">
-      <div class="text-2xl text-center pt-4">
-        Key Points:
-      </div>
-      <ul class="p-6 list-disc text-lg text-center">
-          <% @summary.key_points.each do |key_point| %>
-              <li><%= key_point %></li>
-          <% end %>
-      </ul>
-  </div>
-</div>
-<% if @summary.show_alternatives %>
-        <div class="bg-[#F7FCFC] pt-4">
-            <div class="text-2xl text-center py-6">
-                Comparison:
-            </div>
-            <div class="mx-10 px-6 pb-6 flex md:flex-row flex-col items-center justify-center">
-                <% @summary_alternatives.each do |alternative| %>
-                    <div class="flex flex-col px-6 pt-6 items-center">
-                        <% if alternative.image.representable? %>
-                            <%= image_tag alternative.image.representation(resize_to_limit: [300, 300]), class: "flex-1 object-contain" %>
-                        <% end %>
-                        <% @summary.alternative_metrics.each_with_index do |metric, index| %>
-                            <div class="flex flex-row max-w-sm w-full"> 
-                                <div class="flex-1 p-4 border border-black"><%= metric %></div>
-                                <div class="flex-1 p-4 border border-black"><%= alternative.comparison_values[index] %></div>
-                            </div>                      
-                        <% end %>
-                    </div>
-                <% end %>
-            </div>
+    <div class="mx-10 p-6 flex flex-col items-center flex-1">
+        <div class="text-2xl text-center pt-4">
+            Key Points:
         </div>
-<% end %>
+        <ul class="p-6 list-disc text-lg text-center">
+            <% @summary.key_points.each do |key_point| %>
+                <li><%= key_point %></li>
+            <% end %>
+        </ul>
+    </div>
+    <div class="px-16 py-6 flex flex-col items-center flex-1 bg-[beige]">
+            <div class="text-2xl text-center py-4">
+                Process Diagram:
+            </div>
+            <% if @process_diagram.representable? %>
+                <%= image_tag @process_diagram.representation(resize_to_limit: [300, 300]), 
+                    class: "flex-1 border border-black border-4 object-fill my-4" %>
+            <% else %>
+                <%= image_tag(image_path('upload_image.png'), class: "object-contain") %>
+            <% end %>
+    </div>
+</div>
+<% if @summary.alternatives_count > 0 %>
+    <div class="bg-[#F7FCFC] pt-4">
+        <div class="text-2xl text-center py-6">
+            <span>Money and Time saved:</span>
+        </div>
+        <div class="mx-10 px-6 pb-6 flex flex-col items-center justify-center">
+            <% @summary_alternatives.each do |alternative| %>
+                <div class="flex mx-6 mb-4 items-center border border-slate-300 rounded bg-white w-full">
+                    <div class="flex flex-col p-4 items-center"> 
+                        <span class="text-lg font-semibold pb-2"><%= alternative.title %></span>
+                        <span>Money Saved: $<%= alternative.money_saved %></span>
+                        <span>Time (hours) saved: <%= alternative.time_saved %></span>
+                        <span>Use cases:</span>
+                        <span><%= alternative.use_case %></span>
+                    </div>     
+                    <div class="flex pl-4 self-start flex-1">
+                        <div class="flex-col flex flex-1 mr-4">
+                            <span class="py-4">Pros:</span>
+                            <span><%= alternative.pros %></span>
+                        </div>
+                        <div class="flex-col flex flex-1 mr-4">
+                            <span class="py-4">Cons:</span>
+                            <span><%= alternative.pros %></span>
+                        </div>
+                    </div>
+                </div>                     
+            <% end %>
+        </div>
+    </div>   
+<% end %>   
 <div class="bg-[#F7FCFC]">
-  <div class="mx-10 p-6 flex flex-col items-center">
-      <div class="text-2xl text-center pt-4">
-          Further Reading:
-      </div>
-      <ul class="p-6 list-disc text-lg text-center">
-          <% @summary.sources.each do |source| %>
-              <li><%= link_to source, source, class: "hover:underline hover:text-blue-400" %></li>
-          <% end %>
-      </ul>
-  </div>
+    <div class="mx-10 p-6 flex flex-col items-center">
+        <div class="text-2xl text-center pt-4">
+            Further Reading:
+        </div>
+        <ul class="p-6 list-disc text-lg text-center">
+            <% @summary.sources.each do |source| %>
+                <li><%= link_to source, source, class: "hover:underline hover:text-blue-400" %></li>
+            <% end %>
+        </ul>
+    </div>
 </div>
 <div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
-    <%= link_to "< Prev", theory_path(@lesson, @last_page_index),
+    <%= link_to "< Prev", lesson_page_path(@lesson, @last_page_index),
     class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
     <div class="flex-0"></div>
 </div>

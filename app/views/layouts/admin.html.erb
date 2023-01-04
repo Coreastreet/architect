@@ -16,6 +16,9 @@
       <%= yield %>
     </main>
     <%= render "layouts/admin_footer" %>
+    <% if flash[:notice].present? %>
+      <%= render partial: "shared/flash" %>
+    <% end %>
   </body>
   <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/js/all.min.js"></script>
 </html>

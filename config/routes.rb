@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
-    get 'problems/show'
+    get 'theory_points/new'
   end
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -16,9 +16,18 @@ Rails.application.routes.draw do
 
     resources :subjects, only: [:update, :destroy, :edit], param: "subject_slug"
 
-    resources :lessons, shallow: true, param: "slug", only: [] do 
-      resources :pages, only: [:index, :show]
-      get "problem", to: "problems#show"
+    resources :lessons, param: "slug", only: [] do 
+      resources :lesson_pages, only: [:show, :edit, :update, :destroy, :create], param: "lesson_page_id", shallow: true
+      resource :problem, only: [:show, :edit, :update], param: "problem_id"
+      resource :summary, only: [:show, :edit, :update], param: "problem_id"
+    end
+
+    resources :lesson_pages, only: [], shallow: true do
+      resources :theory_points, only: [:new, :create, :destroy], shallow: true
+    end
+
+    resources :summaries, only: [] do
+      resources :alternatives, only: [:new, :create, :edit, :update, :show, :destroy]
     end
   end
   # Defines the root path route ("/")
@@ -26,6 +35,6 @@ Rails.application.routes.draw do
   get '/:subject_slug/lessons', to: "lessons#index_by_subject", as: 'lessons' 
   get '/lesson/:lesson_slug', to: "lessons#show", as: 'lesson'
   get '/lesson/:lesson_slug/problem', to: "problem#show", as: 'problem'
-  get '/lesson/:lesson_slug/theory/part-(:theory_id)', to: "theory_chunks#show", as: 'theory'
+  get '/lesson/:lesson_slug/part-(:lesson_page_id)', to: "lesson_pages#show", as: 'lesson_page'
   get '/lesson/:lesson_slug/summary', to: "summary#show", as: 'summary'
 end

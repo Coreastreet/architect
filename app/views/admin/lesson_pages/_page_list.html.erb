@@ -1,0 +1,19 @@
+<div class="flex flex-col flex-nowrap items-end overflow-y-scroll h-[70vh]" id="lesson_pages_list">
+    <%= link_to "Problem", admin_lesson_problem_path(lesson), class: "mb-3 w-[15rem] unselected lesson_page_button flex-0 
+                            group rounded px-6 py-2 shadow-md flex text-xl font-semibold " %>
+    <% lesson_pages.each do |lesson_page| %>
+            <%= link_to admin_lesson_page_path(lesson_page), class: ("mb-3 w-[15rem] lesson_page_button 
+                        flex-0 group rounded px-6 py-2 shadow-md flex items-center flex-col h-fit" + (current_page.id == lesson_page.id ? " selected" : " unselected")), 
+                        data: { turbo_frame: "show_lesson", 'index': lesson.page_id_order.index(lesson_page.id) } do %>
+                        <div class="w-full flex justify-between items-center">
+                            <span class="text-xl font-semibold group-hover:underline flex-1">
+                                <%= lesson_page.title.capitalize %>
+                            </span>
+                        </div>
+            <% end %>
+    <% end %>
+    <%= link_to "Summary", admin_lesson_summary_path(lesson), class: "mb-3 w-[15rem] unselected lesson_page_button flex-0 
+                            group rounded px-6 py-2 shadow-md flex text-xl font-semibold " %>
+    <%= button_to "New lesson page", admin_lesson_lesson_pages_path(lesson), method: :post, class: "btn btn-blue text-sm font-light rounded self-end",
+                            data: { turbo_frame: "new_lesson_page" } %>
+</div>

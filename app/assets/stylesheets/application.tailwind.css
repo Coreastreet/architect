@@ -16,12 +16,8 @@
 
 @layer utilities {
     .sb1 {
-        width: 300px;
-        margin: 50px auto;
         border: 4px solid black;
-        padding: 20px;
         text-align: center;
-        font-weight: 900;
         color: black;
         background-color: white;
         font-family: arial;
@@ -78,4 +74,45 @@
         overflow: hidden;
         transition: max-height 0.2s ease-out;
       }
+
+      .lesson_page_button.unselected:hover {
+        @apply shadow-lg border bg-emerald-50 border-l-4 underline cursor-pointer;
+      }
+
+      .lesson_page_button.unselected {
+        @apply bg-white border-2;
+      }
+
+      .lesson_page_button.selected {
+        @apply bg-emerald-50 border-r border-y border-l-4 border-[#296e01];
+      }
+
+      .lesson_page_buttons > div {
+        display: flex;
+      }
+
+      .cross {
+        @apply text-lg px-2 pb-1
+      }
+
+      .cross:hover {
+        @apply font-bold text-red-600 cursor-pointer bg-slate-300
+      }
+
+
+      
+      /*
+      .editable::after {
+        content: url("data:image/svg+xml,%3C%3Fxml version='1.0' standalone='no'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'%3E%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640.000000 640.000000' preserveAspectRatio='xMidYMid meet'%3E%3Cg transform='translate(0.000000,640.000000) scale(0.100000,-0.100000)'%0Afill='%230645AD' stroke='none'%3E%3Cpath d='M5384 6160 c-112 -23 -32 53 -2298 -2209 l-2149 -2146 -50 -105%0Ac-269 -569 -577 -1252 -584 -1297 -5 -28 0 -37 28 -64 27 -25 39 -30 65 -26%0A38 6 256 103 895 397 l484 223 1828 1826 c2109 2106 2484 2487 2523 2567 25%0A50 26 61 22 166 -3 103 -6 118 -33 168 -33 60 -308 349 -399 420 -87 67 -231%0A101 -332 80z m171 -216 c42 -20 287 -257 353 -342 46 -59 61 -119 43 -175 -6%0A-18 -37 -65 -68 -103 -75 -90 -433 -454 -447 -454 -14 0 -576 562 -576 576 0%0A14 387 395 460 453 30 24 69 50 85 58 37 17 99 12 150 -13z m-4251 -4625 c135%0A-138 246 -254 246 -258 0 -14 -918 -437 -927 -427 -7 7 418 936 428 936 4 0%0A117 -113 253 -251z'/%3E%3C/g%3E%3C/svg%3E%0A");
+        width: 16px;
+        height: auto;
+        display: inline-block;
+        white-space: pre;
+        padding-left: 20px;
+      }
+
+      .editable:hover::after {
+        cursor: pointer;
+      }
+      */
 }

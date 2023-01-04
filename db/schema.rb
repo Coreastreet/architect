@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_02_214814) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,11 +43,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
   end
 
   create_table "alternatives", force: :cascade do |t|
-    t.string "comparison_values", default: [], array: true
-    t.bigint "summary_id", null: false
+    t.string "title"
+    t.integer "time_saved"
+    t.integer "money_saved"
+    t.string "use_case"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title"
+    t.bigint "summary_id", null: false
+    t.text "pros"
+    t.text "cons"
     t.index ["summary_id"], name: "index_alternatives_on_summary_id"
   end
 
@@ -75,23 +79,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
     t.index ["device_user_id"], name: "index_emails_on_device_user_id"
   end
 
-  create_table "exercises", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.text "solution"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "lesson_page_id", null: false
-    t.index ["lesson_page_id"], name: "index_exercises_on_lesson_page_id"
-  end
-
   create_table "lesson_pages", force: :cascade do |t|
-    t.string "mini_goal"
-    t.integer "page_index"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
     t.bigint "lesson_id", null: false
+    t.string "exercises", default: [], array: true
+    t.string "answers", default: [], array: true
     t.index ["lesson_id"], name: "index_lesson_pages_on_lesson_id"
   end
 
@@ -105,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
     t.string "objectives", default: [], array: true
     t.integer "lesson_pages_count", default: 0
     t.integer "last_page_visited", default: 0
+    t.integer "page_id_order", default: [], array: true
     t.index ["subject_id"], name: "index_lessons_on_subject_id"
   end
 
@@ -136,8 +131,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
     t.text "aftermath"
     t.string "key_points", default: [], array: true
     t.string "sources", default: [], array: true
-    t.string "alternative_metrics", default: [], array: true
     t.boolean "show_alternatives", default: false
+    t.integer "alternatives_count", default: 0
     t.index ["lesson_id"], name: "index_summaries_on_lesson_id"
   end
 
@@ -166,7 +161,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_072622) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alternatives", "summaries"
-  add_foreign_key "exercises", "lesson_pages"
   add_foreign_key "lesson_pages", "lessons"
   add_foreign_key "lessons", "subjects"
   add_foreign_key "problems", "lessons"

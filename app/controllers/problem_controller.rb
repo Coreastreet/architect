@@ -13,7 +13,7 @@ class ProblemController < ApplicationController
 
   def deslug(str)
     if str.present?
-      str.gsub("-", " ").downcase
+      str.gsub("-", " ").capitalize
     end
   end
 
