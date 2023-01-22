@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_02_214814) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_090322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,14 +44,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_02_214814) do
 
   create_table "alternatives", force: :cascade do |t|
     t.string "title"
-    t.integer "time_saved"
-    t.integer "money_saved"
     t.string "use_case"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "summary_id", null: false
     t.text "pros"
     t.text "cons"
+    t.text "description"
     t.index ["summary_id"], name: "index_alternatives_on_summary_id"
   end
 
@@ -121,6 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_02_214814) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "creator_id", null: false
+    t.integer "lesson_id_order", default: [], array: true
     t.index ["creator_id"], name: "index_subjects_on_creator_id"
   end
 

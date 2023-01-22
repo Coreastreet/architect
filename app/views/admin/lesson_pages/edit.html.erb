@@ -25,7 +25,7 @@
                             <span class="cross">&#9587;</span>
                         <% end %>
                         <div class="pt-6 flex flex-col md:flex-row mb-4">
-                            <div class="px-6 flex flex-col items-center justify-start">
+                            <div class="px-6 flex flex-col items-center justify-center">
                                 <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[8rem]">
                                     <% if theory_point.image.representable? %>
                                             <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
@@ -57,7 +57,7 @@
                                 <%= ff.text_area :description, class: "p-2 text-md text-center m-4 w-[85%]", rows: "6" %>
                                 <%= ff.hidden_field :lesson_page_id, value: @page.id  %>
                             </div>
-                            <div class="px-6 flex flex-col items-center justify-start">
+                            <div class="px-6 flex flex-col items-center justify-center">
                                 <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[8rem]">
                                     <% if theory_point.image.representable? %>
                                             <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
@@ -115,7 +115,7 @@
             <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points">
                 <% if (@page.answers.empty?) %>
                         <%= f.hidden_field :answers, value: '[]' %>
-                        <li class="mb-1"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
+                        <li class="mb-1 w-full"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
                 <% else %>
                     <%= f.hidden_field :answers, value: @page.answers.to_json %>
                     <% @page.answers.each do |answer| %>

@@ -1,4 +1,6 @@
 class Lesson < ApplicationRecord
+  after_create :createProblemSummaryPages
+
   belongs_to :subject
 
   has_one :problem
@@ -12,5 +14,9 @@ class Lesson < ApplicationRecord
   def to_param
     return nil unless persisted?
     self.title.downcase.gsub(' ', '-') # 1-english-for-everyone
+  end
+
+  def createProblemSummaryPages
+    
   end
 end

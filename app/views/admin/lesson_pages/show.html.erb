@@ -1,122 +1,173 @@
-
-<div class="flex justify-between px-6 py-2">
-    <span class="text-lg self-center">
-        <%= link_to "Lessons", admin_subject_lessons_path(@subject), class: "hover:underline hover:text-blue-700" %>
-        <%= " > #{@lesson.title} > #{@page.title}" %>
-    </span>
-    <span>
-        <div class="flex">    
-            <button class="btn btn-blue border-black bg-slate-grey text-sm font-light rounded mr-2" data-action="admin#updateLessonPage">
-                Update Page
-            </button>
-            <%= button_to "New Theory Point", admin_lesson_page_theory_points_path(@page), method: :post,
-                    data: { turbo_frame: "edit_lesson_page" }, class: "btn btn-blue border-black bg-slate-grey text-sm font-light rounded mr-2" %>
-            <%= link_to "Preview", lesson_page_path(@lesson, (@lesson.page_id_order.index(@page.id)+1)), class: "btn btn-blue text-sm font-light rounded mr-2" %>
-            <%= link_to "Delete", admin_lesson_page_path(@page), data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" },
-                class: "bg-gray-200 hover:bg-gray-300 text-sm text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
-        </div>
-    </span>
-  </div>
 <div class="flex flex-row px-6 pb-8">
-      <div class="flex flex-1 overflow-y-scroll h-[80vh] border border-black flex-col">
-            <%= turbo_frame_tag "edit_lesson_page" do %>
-                <%= form_with(model: @page, scope: :lesson_page, method: :patch, url: admin_lesson_page_path(@page), 
-                    data: { 'admin-target': "editLessonPageForm" } ) do |f| %>
-                    <div class="title flex justify-between text-4xl bg-slate-200 py-4">
-                        <%= f.text_field :title, class: "text-4xl text-center shrink min-w-0 pl-4 my-3 ml-4 bg-slate-200
-                        border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
-                        <div class="flex flex-col mx-6">
-                            <%= f.hidden_field :index, value: @lesson.page_id_order.index(@page.id), data: { 'max-index': @lesson.lesson_pages_count } %>
-                            <span data-action="click->admin#move_page_up" class="w-[6rem] btn-blue
-                                    font-light px-2 py-2 border-black text-sm text-center rounded hover:cursor-pointer align-end">
-                                Move up
-                            </span>
-                            <span data-action="click->admin#move_page_down" class="w-[6rem] btn-blue
-                                    font-light px-2 py-2 border-black text-sm text-center rounded mt-2 hover:cursor-pointer align-end">
-                                Move down
-                            </span>
+        <div class="flex flex-col flex-nowrap mx-4 mt-6">
+            <div class="flex pb-4 mr-4 justify-center">
+                <span class="text-2xl font-bold align-center"><%= @lesson.title %></span>
+            </div>
+            <div class="flex justify-between pb-6 mr-4">
+                <span class="text-xl self-center"><%= @lesson.lesson_pages_count %> Pages</span>
+                <%= button_to "+ New", admin_lesson_lesson_pages_path(@lesson), method: :post, class: "px-4 py-1 btn btn-blue text-md font-light rounded self-end",
+                            data: { turbo_frame: "new_lesson_page" } %>
+            </div>
+            <%= render partial: 'page_list', locals: { lesson_pages: @lesson_pages, lesson: @lesson, current_page: @page } %>
+            <div class="flex flex-col flex-nowrap">
+                <div class="flex my-4 mr-4">
+                    <%= link_to "Prev", (@prev_lesson_page.nil? ? admin_lesson_problem_path(@lesson) : admin_lesson_page_path(@prev_lesson_page)),  
+                        class:"btn btn-blue justify-center flex flex-1 rounded px-6 py-2 shadow-md text-sm font-light hover:cursor-pointer" %>
+                    <%= link_to "Next", (@next_lesson_page.nil? ? admin_lesson_summary_path(@lesson) : admin_lesson_page_path(@next_lesson_page)),  
+                        class:"ml-4 btn btn-blue justify-center flex flex-1 rounded px-6 py-2 shadow-md text-sm font-light hover:cursor-pointer" %>
+                </div>
+            </div>
+        </div>
+
+    <div class="flex flex-col flex-1">
+        <div class="flex justify-between py-4">
+            <span class="text-lg self-center">
+                <%= link_to "Lessons", admin_lesson_index_show_path(@lesson), class: "hover:underline hover:text-blue-700" %>
+                <%= " > #{@lesson.title} > #{@page.title}" %>
+            </span>
+            <span>
+                <div class="flex">    
+                    <button class="btn btn-blue border-black bg-slate-grey text-md font-light rounded mr-2" data-action="admin#updateLessonPage">
+                        Update Page
+                    </button>
+                    <%= button_to "New Theory Point", admin_lesson_page_theory_points_path(@page), method: :post,
+                            data: { turbo_frame: "edit_lesson_page" }, class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded mr-2" %>
+                    <%= link_to "Preview", lesson_page_path(@lesson, (@lesson.page_id_order.index(@page.id)+1)), class: "btn btn-blue text-md font-light rounded mr-2" %>
+                    <%= link_to "Delete", admin_lesson_page_path(@page), data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" },
+                        class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                </div>
+            </span>
+        </div>
+        <div class="flex flex-1 overflow-y-scroll max-h-[35rem] border border-black flex-col">
+                <%= turbo_frame_tag "edit_lesson_page" do %>
+                    <%= form_with(model: @page, scope: :lesson_page, method: :patch, url: admin_lesson_page_path(@page), 
+                        data: { 'admin-target': "editLessonPageForm" } ) do |f| %>
+                        <div class="title flex justify-between text-4xl bg-slate-200 py-4">
+                            <%= f.text_field :title, class: "text-4xl text-center shrink min-w-0 pl-4 my-3 ml-4 bg-slate-200
+                            border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
+                            <div class="flex flex-col mx-6">
+                                <%= f.hidden_field :index, value: @lesson.page_id_order.index(@page.id), data: { 'max-index': @lesson.lesson_pages_count } %>
+                                <span data-action="click->admin#move_page_up" class="w-[6rem] btn-blue
+                                        font-light px-2 py-2 border-black text-sm text-center rounded hover:cursor-pointer align-end">
+                                    Move up
+                                </span>
+                                <span data-action="click->admin#move_page_down" class="w-[6rem] btn-blue
+                                        font-light px-2 py-2 border-black text-sm text-center rounded mt-2 hover:cursor-pointer align-end">
+                                    Move down
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <% @page_theory_points.each_with_index do |theory_point, index| %> 
-                        <%= f.fields_for :theory_points, theory_point do |ff| %>
-                            <% if (index.even?) %>
-                                <div class="bg-white">
-                                    <%= link_to admin_theory_point_path(theory_point), data: { 'turbo-method': :delete,  'turbo-confirm': "Are you sure?" } do %>
-                                        <span class="cross">&#9587;</span>
-                                    <% end %>
-                                    <div class="pt-6 flex flex-col md:flex-row mb-4">
-                                        <div class="px-6 flex flex-col items-center justify-start">
-                                            <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[8rem]">
-                                                <% if theory_point.image.representable? %>
-                                                        <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
-                                                        class: "object-fill") %>
-                                                <% else %>
-                                                    <%= image_tag(image_path('upload_image.png'), class: "object-fill",  data: { 'admin-target':'imageBox' }) %>
-                                                <% end %>
-                                                <%= ff.file_field :image, type: "file", id: "theory_point_image_uploads_#{index}", accept: ".png, .jpeg, .jpg", 
-                                                        class: "image_fill hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
-                                            </label>
+                        <% @page_theory_points.each_with_index do |theory_point, index| %> 
+                            <%= f.fields_for :theory_points, theory_point do |ff| %>
+                                <% if (index.even?) %>
+                                    <div class="bg-white">
+                                        <%= link_to admin_theory_point_path(theory_point), data: { 'turbo-method': :delete,  'turbo-confirm': "Are you sure?" } do %>
+                                            <span class="cross">&#9587;</span>
+                                        <% end %>
+                                        <div class="pt-6 flex flex-col md:flex-row mb-4">
+                                            <div class="ml-6 flex flex-col items-center justify-center">
+                                                <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[10rem]">
+                                                    <% if theory_point.image.representable? %>
+                                                            <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
+                                                            class: "object-fill") %>
+                                                    <% else %>
+                                                        <%= image_tag(image_path('upload_image.png'), class: "object-fill",  data: { 'admin-target':'imageBox' }) %>
+                                                    <% end %>
+                                                    <%= ff.file_field :image, type: "file", id: "theory_point_image_uploads_#{index}", accept: ".png, .jpeg, .jpg", 
+                                                            class: "image_fill hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+                                                </label>
+                                            </div>
+                                            <div class="flex flex-col items-center flex-1">
+                                                <%= ff.text_field :title, class: "w-[85%] px-2 py-0 text-lg font-light italic text-center
+                                                    border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
+                                                <%= ff.text_area :description, class: "p-2 text-md text-center m-4 w-[85%]", rows: "6" %>
+                                                <%= ff.hidden_field :lesson_page_id, value: @page.id  %>
+                                            </div>
                                         </div>
-                                        <div class="flex flex-col items-center flex-1">
-                                            <%= ff.text_field :title, class: "w-[85%] px-2 py-0 text-lg font-light italic text-center
-                                                border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
-                                            <%= ff.text_area :description, class: "p-2 text-md text-center m-4 w-[85%]", rows: "6" %>
-                                            <%= ff.hidden_field :lesson_page_id, value: @page.id  %>
+                                    </div>  
+                                <% else %>
+                                    <div class=" bg-[#F7FCFC]">
+                                        <%= link_to admin_theory_point_path(theory_point), data: { 'turbo-method': :delete, 'turbo-confirm': "Are you sure?" } do %>
+                                            <span class="cross">&#9587;</span>
+                                        <% end %>
+                                        <div class="pt-6 flex flex-col md:flex-row mb-4">
+                                            <div class="flex flex-col items-center flex-1">
+                                                <%= ff.text_field :title, class: "w-[85%] px-2 py-0 text-lg font-light italic text-center
+                                                    border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
+                                                <%= ff.text_area :description, class: "p-2 text-md text-center m-4 w-[85%]", rows: "6" %>
+                                                <%= ff.hidden_field :lesson_page_id, value: @page.id  %>
+                                            </div>
+                                            <div class="mr-6 flex flex-col items-center justify-center">
+                                                <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[10rem]">
+                                                    <% if theory_point.image.representable? %>
+                                                            <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
+                                                            class: "object-fill") %>
+                                                    <% else %>
+                                                        <%= image_tag(image_path('upload_image.png'), class: "object-fill",  data: { 'admin-target':'imageBox' }) %>
+                                                    <% end %>
+                                                    <%= ff.file_field :image, type: "file", id: "theory_point_image_uploads_#{index}", accept: ".png, .jpeg, .jpg", 
+                                                            class: "image_fill hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>  
-                            <% else %>
-                                <div class=" bg-[#F7FCFC]">
-                                    <%= link_to admin_theory_point_path(theory_point), data: { 'turbo-method': :delete, 'turbo-confirm': "Are you sure?" } do %>
-                                        <span class="cross">&#9587;</span>
-                                    <% end %>
-                                    <div class="pt-6 flex flex-col md:flex-row mb-4">
-                                        <div class="flex flex-col items-center flex-1">
-                                            <%= ff.text_field :title, class: "w-[85%] px-2 py-0 text-lg font-light italic text-center
-                                                border-0 border-b border-solid border-b-blue-300 focus:border-b-blue-800 focus:ring-0" %>
-                                            <%= ff.text_area :description, class: "p-2 text-md text-center m-4 w-[85%]", rows: "6" %>
-                                            <%= ff.hidden_field :lesson_page_id, value: @page.id  %>
-                                        </div>
-                                        <div class="px-6 flex flex-col items-center justify-start">
-                                            <label for=<%= "theory_point_image_uploads_#{index}" %> class="hover:cursor-pointer max-w-[8rem]">
-                                                <% if theory_point.image.representable? %>
-                                                        <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
-                                                        class: "object-fill") %>
-                                                <% else %>
-                                                    <%= image_tag(image_path('upload_image.png'), class: "object-fill",  data: { 'admin-target':'imageBox' }) %>
-                                                <% end %>
-                                                <%= ff.file_field :image, type: "file", id: "theory_point_image_uploads_#{index}", accept: ".png, .jpeg, .jpg", 
-                                                        class: "image_fill hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>  
+                                    </div>  
+                                <% end %>
                             <% end %>
                         <% end %>
-                    <% end %>
-                    <hr class="bg-slate-300 border-slate-300">
-                        <%= turbo_frame_tag "new_alternative", target: "_top" %>           
-                    <hr class="bg-slate-300 border-slate-300">
-                    <div class="flex flex-1 flex-col items-center bg-[#F7FCFC] py-6 list-holder">
+                        <hr class="bg-slate-300 border-slate-300">
+                            <%= turbo_frame_tag "new_alternative", target: "_top" %>           
+                        <hr class="bg-slate-300 border-slate-300">
+                        <div class="flex flex-1 flex-col items-center bg-[#F7FCFC] py-6 list-holder">
+                                <div class="text-2xl text-center">
+                                    Exercises
+                                </div>
+                                <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points" data-admin-target="summarySourcesInput">
+                                    <% if (@page.exercises.empty?) %>
+                                            <%= f.hidden_field :exercises, value: '[]' %>
+                                            <li class="mb-1 w-full"><input class="page_exercise border-none w-[80%] bg-transparent" type="text" name="lesson_page[exercise]" value="" ></li>
+                                    <% else %>
+                                        <%= f.hidden_field :exercises, value: @page.exercises.to_json %>
+                                        <% @page.exercises.each do |exercise| %>
+                                            <li class="mb-1 w-full">
+                                                <input class="page_exercise border-none w-[80%] bg-transparent" type="text" name="lesson_page[exercise]" value="<%= exercise %>" >
+                                                <span class="cross" data-action="click->admin#remove_bullet">&#9587;</span>
+                                            </li>
+                                        <% end %>
+                                    <% end %>
+                                </ol>
+                                <%= f.text_area :key_point, class: "mt-2 max-w-[85%] flex summary_key_point flex-1 pl-4 w-full
+                                        border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummaryKeyPoint" }, rows: 3 %>
+                                <div class="flex self-end pr-12">
+                                    <div data-action="click->admin#update_bullet_points" class="w-fit btn-blue
+                                            font-light px-2 py-2 border-black text-sm rounded mt-4 hover:cursor-pointer align-end">
+                                        Update Sources
+                                    </div>
+                                    <div data-action="click->admin#add_bullet_point" class="h-fit ml-2 w-fit btn-blue
+                                            font-light px-2 py-2 border-black text-sm rounded mt-4 hover:cursor-pointer">
+                                        + Add Sources
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="py-6 flex-1 flex flex-col bg-white list-holder items-center">
                             <div class="text-2xl text-center">
-                                Exercises
+                                Answers:
                             </div>
-                            <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points" data-admin-target="summarySourcesInput">
-                                <% if (@page.exercises.empty?) %>
-                                        <%= f.hidden_field :exercises, value: '[]' %>
-                                        <li class="mb-1 w-full"><input class="page_exercise border-none w-[80%] bg-transparent" type="text" name="lesson_page[exercise]" value="" ></li>
+                            <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points">
+                                <% if (@page.answers.empty?) %>
+                                        <%= f.hidden_field :answers, value: '[]' %>
+                                        <li class="mb-1"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
                                 <% else %>
-                                    <%= f.hidden_field :exercises, value: @page.exercises.to_json %>
-                                    <% @page.exercises.each do |exercise| %>
+                                    <%= f.hidden_field :answers, value: @page.answers.to_json %>
+                                    <% @page.answers.each do |answer| %>
                                         <li class="mb-1 w-full">
-                                            <input class="page_exercise border-none w-[80%] bg-transparent" type="text" name="lesson_page[exercise]" value="<%= exercise %>" >
+                                            <input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="<%= answer %>" >
                                             <span class="cross" data-action="click->admin#remove_bullet">&#9587;</span>
                                         </li>
                                     <% end %>
                                 <% end %>
                             </ol>
                             <%= f.text_area :key_point, class: "mt-2 max-w-[85%] flex summary_key_point flex-1 pl-4 w-full
-                                    border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummaryKeyPoint" }, rows: 3 %>
+                            border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummaryKeyPoint" }, rows: 3 %>
                             <div class="flex self-end pr-12">
                                 <div data-action="click->admin#update_bullet_points" class="w-fit btn-blue
                                         font-light px-2 py-2 border-black text-sm rounded mt-4 hover:cursor-pointer align-end">
@@ -127,50 +178,9 @@
                                     + Add Sources
                                 </div>
                             </div>
-                    </div>
-                    <div class="py-6 flex-1 flex flex-col bg-white list-holder items-center">
-                        <div class="text-2xl text-center">
-                            Answers:
                         </div>
-                        <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points">
-                            <% if (@page.answers.empty?) %>
-                                    <%= f.hidden_field :answers, value: '[]' %>
-                                    <li class="mb-1"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
-                            <% else %>
-                                <%= f.hidden_field :answers, value: @page.answers.to_json %>
-                                <% @page.answers.each do |answer| %>
-                                    <li class="mb-1 w-full">
-                                        <input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="<%= answer %>" >
-                                        <span class="cross" data-action="click->admin#remove_bullet">&#9587;</span>
-                                    </li>
-                                <% end %>
-                            <% end %>
-                        </ol>
-                        <%= f.text_area :key_point, class: "mt-2 max-w-[85%] flex summary_key_point flex-1 pl-4 w-full
-                        border border-solid focus:border-blue-900 rounded", data: { "admin-target":"newSummaryKeyPoint" }, rows: 3 %>
-                        <div class="flex self-end pr-12">
-                            <div data-action="click->admin#update_bullet_points" class="w-fit btn-blue
-                                    font-light px-2 py-2 border-black text-sm rounded mt-4 hover:cursor-pointer align-end">
-                                Update Sources
-                            </div>
-                            <div data-action="click->admin#add_bullet_point" class="h-fit ml-2 w-fit btn-blue
-                                    font-light px-2 py-2 border-black text-sm rounded mt-4 hover:cursor-pointer">
-                                + Add Sources
-                            </div>
-                        </div>
-                    </div>
+                    <% end %>
                 <% end %>
-            <% end %>
-      </div>
-      <div class="flex flex-col flex-nowrap ml-4 justify-between">
-          <%= render partial: 'page_list', locals: { lesson_pages: @lesson_pages, lesson: @lesson, current_page: @page } %>
-          <div class="flex flex-col flex-nowrap">
-              <div class="flex mt-6">
-                  <%= link_to "Prev", (@prev_lesson_page.nil? ? admin_lesson_problem_path(@lesson) : admin_lesson_page_path(@prev_lesson_page)),  
-                      class:"ml-4 btn btn-blue justify-center flex flex-1 rounded px-6 py-2 shadow-md text-sm font-light hover:cursor-pointer" %>
-                  <%= link_to "Next", (@next_lesson_page.nil? ? admin_lesson_summary_path(@lesson) : admin_lesson_page_path(@next_lesson_page)),  
-                      class:"ml-4 btn btn-blue justify-center flex flex-1 rounded px-6 py-2 shadow-md text-sm font-light hover:cursor-pointer" %>
-              </div>
-          </div>
-      </div>
+        </div>
+    </div>
 </div>

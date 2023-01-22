@@ -9,10 +9,9 @@
                 data: { turbo_frame: "new_lesson" }, class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded py-1 px-4" %>
         </div>
         <div class="flex flex-col flex-nowrap items-end overflow-y-scroll flex-1">
-            <% @lessons.each_with_index do |lesson, index| %>
+            <% @lessons.each do |lesson| %>
                     <%= link_to admin_lesson_path(lesson), class: "mb-3 w-[15rem] group rounded px-6 py-2 shadow-md lesson_page_button
-                                flex items-center flex-col h-fit " + (((index == 0) && (@first_lesson.present?)) ? "selected" : "unselected"), 
-                                data: { turbo_frame: "show_lesson", action: "click->admin#select_button" } do %>
+                                flex items-center flex-col h-fit" + ((lesson.id == @lesson.id) ? " selected" : " unselected"), data: { turbo_frame: "show_lesson", action: "click->admin#select_button" } do %>
                                 <div class="w-full flex justify-between items-center">
                                     <span class="text-xl font-semibold group-hover:underline flex-1">
                                         <%= lesson.title.capitalize %>
@@ -22,14 +21,10 @@
             <% end %>
         </div>
     </div>
-    <% if (@first_lesson.present?) %>
-        <%= turbo_frame_tag "show_lesson" do %>
-            <%= turbo_frame_tag @lesson do %>
-                <%= render partial: 'show', locals: { lesson: @first_lesson, subject: @subject } %>
-            <% end %>
+    <%= turbo_frame_tag "show_lesson" do %>
+        <%= turbo_frame_tag @lesson do %>
+            <%= render partial: 'show', locals: { lesson: @lesson, subject: @subject } %>
         <% end %>
-    <% else %>    
-        <%= turbo_frame_tag "show_lesson", target: "_top" %>           
-    <% end %>
+    <% end %>       
     <%= turbo_frame_tag "new_lesson", target: "_top" %>           
 </div>

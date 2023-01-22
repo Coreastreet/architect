@@ -1,54 +1,5 @@
 <%= turbo_frame_tag "show_lesson" do %>
     <%= turbo_frame_tag @lesson do %>
-        <div class="px-6 flex flex-col min-w-[25rem] w-[50rem]">
-                <div class="border-2 rounded p-6 shadow-md bg-white flex flex-col items-center">
-                    <div class="w-full mr-4 pt-1 text-xl font-semibold group-hover:underline flex-1 flex flex-col justify-between min-w-0">
-                        <figure class="flex items-center flex-0 w-full justify-center mt-6">
-                            <% if @lesson.image.representable? %>
-                                    <%= image_tag(@lesson.image.representation(resize_to_limit: [300, 300]),
-                                    class: "object-contain w-[12rem]") %>
-                            <% else %>
-                                <%= image_tag(image_path('upload_image.png'), class: "object-contain w-[12rem]") %>
-                            <% end %>
-                        </figure>
-                        <div class="flex justify-between mt-6 font-light
-                            text-md flex-1 pl-4 border-0">
-                                <span class=" self-center pl-4 w-[10rem]">Title: </span>
-                                <span class=" flex-1"><%= @lesson.title %></span>
-                        </div>
-                        <div class="flex justify-between mt-6 font-light
-                            text-md flex-1 pl-4 border-0">
-                                <span class="self-center pl-4 w-[10rem]">Subtitle: </span>
-                                <span class=" flex-1"><%= @lesson.subtitle %></span>
-                        </div>
-                        <div class="flex justify-between mt-6 font-light
-                            text-md flex-1 pl-4 border-0">
-                                <span class=" self-center pl-4 w-[10rem]">Description: </span>
-                                <span class=" flex-1"><%= @lesson.description %></span>
-                        </div>
-                        <div class="flex justify-between mt-6 font-light text-md flex-1 pl-4 border-0">
-                            <div class="self-center pl-4 w-[10rem]">
-                                Objectives:
-                            </div>
-                            <ul class="flex-1 flex flex-col list-disc pl-[1.25rem]">
-                                <% @lesson.objectives.each do |obj| %>
-                                    <li><%= obj %></li>
-                                <% end %>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="px-6 flex mt-4 justify-between w-full">
-                        <div class="flex">
-                            <%= link_to "Edit", edit_admin_lesson_path(@lesson), class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
-                            <%= link_to "Delete", admin_lesson_path(@lesson), data: { "turbo-method": :delete, turbo_confirm: "are you sure?" }, class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
-                        </div>
-                        <div class="flex">
-                            <%= link_to "View Pages", (@lesson.last_page_visited == 0) ? admin_lesson_problem_path(@lesson) : admin_page_path(@lesson.last_page_visited), 
-                                class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
-                            <%= link_to 'Cancel', admin_subject_lessons_path(@subject), class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
-                        </div>                    
-                    </div>
-                </div>
-        </div>
+        <%= render partial: 'show', locals: { lesson: @lesson, subject: @subject } %>
     <% end %>
 <% end %>

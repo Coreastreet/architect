@@ -134,7 +134,7 @@ export default class extends Controller {
         var new_summary_key_point = this.newSummaryKeyPointTarget;
 
         let copy = summary_key_points_list.lastElementChild.cloneNode(true); 
-        copy.lastElementChild.value = new_summary_key_point.value
+        copy.querySelector("input").value = new_summary_key_point.value
         summary_key_points_list.appendChild(copy);
 
         var current_arr = JSON.parse(hidden_input.value);
@@ -148,17 +148,13 @@ export default class extends Controller {
         var summary_key_points_list = this.summaryKeyPointsInputTarget;
         var hidden_input = summary_key_points_list.firstElementChild;
 
-        var li_list = summary_key_points_list.children;
+        var li_list = Array.from(summary_key_points_list.children);
+        li_list.shift();
+        var input_values = li_list.map(function(li) {
+            return li.querySelector("input").value;
+        });
 
-        var new_array = [];
-        for (let i = 0, len = li_list.length; i < len; i++) {
-            if (i == 0) {
-                continue;
-            }
-            new_array.push(li_list[i].lastElementChild.value);
-        }
-
-        hidden_input.value = JSON.stringify(new_array);
+        hidden_input.value = JSON.stringify(input_values);
     }
 
      // this for adding a summary source to a lessons_page
@@ -168,7 +164,7 @@ export default class extends Controller {
         var new_summary_source = this.newSummarySourceTarget;
 
         let copy = summary_sources_list.lastElementChild.cloneNode(true); 
-        copy.lastElementChild.value = new_summary_source.value
+        copy.querySelector("input").value = new_summary_source.value
         summary_sources_list.appendChild(copy);
 
         var current_arr = JSON.parse(hidden_input.value);
@@ -182,15 +178,11 @@ export default class extends Controller {
         var summary_sources_list = this.summarySourcesInputTarget;
         var hidden_input = summary_sources_list.firstElementChild;
 
-        var li_list = summary_sources_list.children;
-
-        var new_array = [];
-        for (let i = 0, len = li_list.length; i < len; i++) {
-            if (i == 0) {
-                continue;
-            }
-            new_array.push(li_list[i].lastElementChild.value);
-        }
+        var li_list = Array.from(summary_sources_list.children);
+        li_list.shift();
+        var new_array = li_list.map(function(li) {
+            return li.querySelector("input").value;
+        });
 
         hidden_input.value = JSON.stringify(new_array);
     }
@@ -200,11 +192,15 @@ export default class extends Controller {
         //summary_key_points_list.querySelector("input.hidden").value;
         var li = event.target.parentElement;
         var summary_key_points_list = li.closest("ol");
+        if (summary_key_points_list == null) {
+            summary_key_points_list = li.closest("ul");
+        }
 
         var arr = Array.from(summary_key_points_list.querySelectorAll("li"));
-
         var index = arr.indexOf(li);    
-        var input_values = JSON.parse(summary_key_points_list.firstElementChild.value);
+        var input_values = arr.map(function(li) {
+            return li.querySelector("input").value;
+        })
 
         input_values.splice(index, 1);
 
@@ -239,5 +235,18 @@ export default class extends Controller {
             current_page.remove();
             prev_page.before(current_page);
         }
+    }
+
+    select_button(event) {
+        var lesson_button = event.target.closest("a");
+        console.log(lesson_button);
+
+        if (lesson_button.classList.contains("unselected")) {
+            lesson_button.classList.remove("unselected");
+            for (var element of (lesson_button.parentElement.children)) {
+                element.classList.replace("selected", "unselected");
+            }
+            lesson_button.classList.add("selected");
+        }       
     }
 }

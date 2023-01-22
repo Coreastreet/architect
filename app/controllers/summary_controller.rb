@@ -1,6 +1,12 @@
 class SummaryController < ApplicationController
   def show
     @lesson = Lesson.find_by(title: lesson_title_param)
+    @subject_lesson_order = @lesson.subject.lesson_id_order
+    
+    lesson_index = @subject_lesson_order.index(@lesson.id)
+    next_lesson_id = @subject_lesson_order[lesson_index + 1]
+    @next_lesson = next_lesson_id.nil? ? nil : Lesson.find(next_lesson_id)
+    
     @lesson_pages = LessonPage.find(@lesson.page_id_order)
 
     @summary = @lesson.summary

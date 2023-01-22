@@ -23,9 +23,17 @@ class Admin::LessonsController < ApplicationController
       @subject = @lesson.subject
   end
 
+  def index_show
+      @lesson = Lesson.find_by(title: lesson_title_param)
+
+      @subject = @lesson.subject
+      @lessons = Lesson.find(@subject.lesson_id_order)
+  end
+
   def index
       @subject = Subject.find_by(title: subject_title_param)
-      @lessons = @subject.lessons
+      @lessons = Lesson.find(@subject.lesson_id_order)
+      @first_lesson = @lessons.first
   end
 
   def edit
@@ -40,7 +48,7 @@ class Admin::LessonsController < ApplicationController
       lesson_params[:title].capitalize!
       lesson.update!(lesson_params)
 
-      redirect_to admin_subject_lessons_path(subject)
+      redirect_to admin_lesson_path(lesson)
   end
 
   def destroy
@@ -55,7 +63,9 @@ class Admin::LessonsController < ApplicationController
   private 
 
   def lesson_params
-    params.require(:lesson).permit(:title, :subtitle, :description, :image, :objectives)
+    less_params = params.require(:lesson).permit(:title, :subtitle, :description, :image, :objectives)
+    less_params[:objectives] = less_params[:objectives].present? ? JSON.parse(less_params[:objectives]) : ''
+    return less_params
   end
 
   def subject_title_param

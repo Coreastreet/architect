@@ -1,0 +1,55 @@
+
+<div class="flex justify-between py-4">
+    <span class="text-lg self-center">
+        <%= link_to "Subjects", admin_subjects_path, class: "hover:underline hover:text-blue-700" %>
+        <%= " > #{subject.title} > #{lesson.title}" %>
+    </span>
+    <span>
+        <div class="flex justify-end w-full">
+            <%= link_to "View Pages", (lesson.last_page_visited == 0) ? admin_lesson_problem_path(lesson) : admin_page_path(lesson.last_page_visited), 
+                    class: "btn-blue px-4 py-2 border-black text-md rounded mr-2" %>
+            <%= link_to "Edit", edit_admin_lesson_path(lesson), class: "btn-blue px-4 py-2 border-black text-md rounded mr-2" %>
+            <%= link_to "Delete", admin_lesson_path(lesson), data: { "turbo-method": :delete, turbo_confirm: "are you sure?" }, class: "btn-blue px-4 py-2 border-black text-md rounded mr-2" %>
+            <%= link_to 'Cancel', admin_subject_lessons_path(subject), class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>               
+        </div>
+    </span>
+</div>
+<div class="flex flex-col">
+        <div class="border-black border p-6 shadow-md bg-white flex flex-col items-center overflow-y-scroll overflow-x-hidden max-h-[35rem]">
+            <div class="flex w-full">
+                <div class="flex flex-1 flex-col pl-4">
+                    <span class="text-xl pt-2 px-2">Title: </span>
+                    <span class="px-2 py-0 text-xl font-light mt-1.5 mb-2"><%= lesson.title %></span>
+                    <span class="text-xl pt-2 px-2">Subtitle: </span>
+                    <span class="px-2 py-0 text-xl font-light mt-1.5 mb-2 border-0"><%= lesson.subtitle %></span>
+                </div>
+                <label for="lesson_image_uploads" class="flex items-center flex-0 justify-center hover:cursor-pointer ml-6">
+                    <figure class="flex items-center flex-0 w-full justify-center">
+                        <% if lesson.image.representable? %>
+                                <%= image_tag(lesson.image.representation(resize_to_limit: [300, 300]),
+                                class: "object-contain w-[12rem]") %>
+                        <% else %>
+                            <%= image_tag(image_path('upload_image.png'), class: "object-contain w-[12rem]") %>
+                        <% end %>
+                    </figure>
+                </label>
+            </div>
+            <div class="w-full mr-4 pt-1 text-xl group-hover:underline flex-1 flex flex-col justify-between min-w-0">
+                <div class="flex justify-between mt-6
+                    text-md flex-1 pl-4 border-0">
+                        <span class="pl-4 w-[10rem]">Description: </span>
+                        <span class="flex-1 font-light"><%= lesson.description %></span>
+                </div>
+                <div class="flex justify-between mt-6 text-md flex-1 pl-4 border-0">
+                    <div class="pl-4 w-[10rem]">
+                        Objectives:
+                    </div>
+                    <ul class="flex-1 flex flex-col list-disc pl-[1.25rem] font-light">
+                        <% lesson.objectives.each do |obj| %>
+                            <li><%= obj %></li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>

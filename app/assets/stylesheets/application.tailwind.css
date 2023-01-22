@@ -91,6 +91,10 @@
         display: flex;
       }
 
+      #show_lesson {
+        flex-grow: 1;
+      }
+
       .cross {
         @apply text-lg px-2 pb-1
       }
@@ -99,6 +103,9 @@
         @apply font-bold text-red-600 cursor-pointer bg-slate-300
       }
 
+      #new_alternative {
+        width: 100%;
+      }
 
       
       /*

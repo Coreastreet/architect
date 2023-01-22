@@ -25,6 +25,6 @@ class Admin::AlternativesController < ApplicationController
   private
 
   def alternative_params
-      params.require(:alternative).permit(:title, :money_saved, :time_saved, :use_case, :pros, :cons, :summary_id)
+      params.require(:alternative).permit(:title, :description, :pros, :cons, :summary_id)
   end
 end

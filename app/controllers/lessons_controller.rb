@@ -4,7 +4,7 @@ class LessonsController < ApplicationController
 
   def index_by_subject
     subject = Subject.find_by(title: subject_title_param)
-    @lessons = subject.lessons
+    @lessons = Lesson.find(subject.lesson_id_order)
   end
 
   def show

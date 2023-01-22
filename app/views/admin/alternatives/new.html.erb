@@ -1,30 +1,23 @@
 <%= turbo_frame_tag "new_alternative" do %>
-    <%= form_with(model: @new_alternative, scope: :alternative, url: admin_summary_alternatives_path(@summary), multipart: true, class: "flex") do |f| %>
-      <div class="flex flex-col mt-6 items-center border border-slate-300 rounded bg-white w-fit">
+    <%= form_with(model: @new_alternative, scope: :alternative, 
+      url: admin_summary_alternatives_path(@summary), multipart: true, class: "flex border border-slate-300 rounded") do |f| %>
+      <div class="flex-1 flex flex-col items-center rounded bg-white">
         <%= f.hidden_field :summary_id, value: @summary.id %>
-        <div class="flex flex-col p-4 w-full"> 
+        <div class="flex flex-col px-4 pt-4 w-full"> 
             <span class="pb-2"><%= f.label :title %></span>
-            <span><%= f.text_field :title, class: "rounded" %></span>
+            <span><%= f.text_field :title, class: "rounded w-full" %></span>
         </div>     
-        <div class="flex justify-between items-center p-4 w-full border-t-2"> 
-            <span class=""><%= f.label :money_saved %></span>
-            <span><%= f.number_field :money_saved, class: "rounded max-w-[8rem]" %></span>
-        </div>  
-        <div class="flex justify-between items-center p-4 w-full border-t-2"> 
-            <span class=""><%= f.label :time_saved %></span>
-            <span><%= f.number_field :time_saved, class: "rounded max-w-[8rem]" %></span>
-        </div>    
-        <div class="flex flex-col p-4 w-full border-t-2"> 
-            <span class="pb-2"><%= f.label :use_case %></span>
-            <span><%= f.text_field :use_case, class: "rounded" %></span>
+        <div class="flex flex-col p-4 w-full h-full"> 
+            <span class="pb-2"><%= f.label :description %></span>
+            <span class="h-full"><%= f.text_area :description, class: "rounded w-full h-full" %></span>
         </div>    
       </div>
-      <div class="flex flex-col mt-6 items-center border border-slate-300 rounded bg-white w-fit">                     
+      <div class="flex-1 flex flex-col items-center rounded bg-white">                     
         <div class="flex flex-col p-4 w-full h-full"> 
             <span class="pb-2"><%= f.label :pros %></span>
-            <span class="h-full"><%= f.text_area :pros, class: "rounded grow-1" %></span>
+            <span class="h-full"><%= f.text_area :pros, class: "rounded grow-1 w-full" %></span>
             <span class="py-2"><%= f.label :cons %></span>
-            <span class="h-full"><%= f.text_area :cons, class: "rounded grow-1" %></span>
+            <span class="h-full"><%= f.text_area :cons, class: "rounded grow-1 w-full" %></span>
             <%= f.submit "Create alternative", class: "btn btn-blue text-sm rounded font-light mt-4" %>
         </div>    
       </div>

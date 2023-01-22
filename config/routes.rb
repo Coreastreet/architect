@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     resources :subjects, shallow: true, only: [:index, :create], param: "slug" do
         resources :lessons, only: [:new, :create, :index, :edit, :destroy, :update, :show], param: "lesson_slug" do
         end
+        resources :lessons, param: "slug" do 
+            get "index_show" # to 'lessons#index_show' action.
+        end
     end
 
     resources :subjects, only: [:update, :destroy, :edit], param: "subject_slug"
