@@ -4,9 +4,12 @@
       <span class="font-semibold text-xl tracking-tight text-[beige]">Factory Man - Dashboard</span>
     <% end %>
     <div>
+        <%= link_to "User Website", root_path, class: "inline-block text-sm px-4 py-2 
+            leading-none border border-blue-800 bg-blue-600 rounded text-white
+            hover:border-transparent hover:bg-blue-800
+            hover:border-sky-600 mr-2" %>
         <%= link_to "Admin Sign Out", admin_logout_path, data: { "turbo-method": :delete }, class: "inline-block text-sm px-4 py-2 
-            leading-none border border-sky-600 bg-sky-600 rounded text-white
-            hover:border-transparent hover:text-black hover:bg-sky-100 
-            hover:border-sky-600" %>
+            leading-none border border-gray-800 bg-gray-500 rounded text-white hover:bg-neutral-800 
+            hover:border-neutral-400" %>
     </div>
 </nav>

@@ -4,6 +4,7 @@ class Admin::SubjectsController < ApplicationController
   before_action :authenticate
 
   def index
+    @recently_updated_pages = LessonPage.order(updated_at: :desc).limit(5)
     @subjects = current_creator.subjects
     @new_subject = Subject.new
   end

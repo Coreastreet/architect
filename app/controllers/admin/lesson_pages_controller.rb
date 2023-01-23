@@ -28,7 +28,7 @@ class Admin::LessonPagesController < ApplicationController
     lesson = Lesson.find_by(title: lesson_title_param)
     @page = LessonPage.create!(lesson_id: lesson.id, title: "Untitled")
     lesson.update!(page_id_order: lesson.page_id_order.unshift(@page.id))
-
+    
     redirect_to admin_lesson_page_path(@page)
   end
 

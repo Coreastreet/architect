@@ -4,9 +4,8 @@
                 <span class="text-2xl font-bold align-center"><%= @lesson.title %></span>
             </div>
             <div class="flex justify-between pb-6 mr-4">
-                <span class="text-xl self-center"><%= @lesson.lesson_pages_count %> Pages</span>
-                <%= button_to "+ New", admin_lesson_lesson_pages_path(@lesson), method: :post, class: "px-4 py-1 btn btn-blue text-md font-light rounded self-end",
-                            data: { turbo_frame: "new_lesson_page" } %>
+                <span class="text-xl self-center"><%= pluralize(@lesson.lesson_pages_count, 'Page') %></span>
+                <%= button_to "+ New", admin_lesson_lesson_pages_path(@lesson), method: :post, class: "px-4 py-1 btn btn-blue text-md font-light rounded self-end" %>
             </div>
             <%= render partial: 'page_list', locals: { lesson_pages: @lesson_pages, lesson: @lesson, current_page: @page } %>
             <div class="flex flex-col flex-nowrap">
@@ -155,7 +154,7 @@
                             <ol class="pl-4 pt-4 flex flex-col items-center list-decimal text-md text-center w-full key-points">
                                 <% if (@page.answers.empty?) %>
                                         <%= f.hidden_field :answers, value: '[]' %>
-                                        <li class="mb-1"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
+                                        <li class="mb-1 w-full"><input class="page_answer border-none w-[80%] bg-transparent" type="text" name="lesson_page[answer]" value="" ></li>
                                 <% else %>
                                     <%= f.hidden_field :answers, value: @page.answers.to_json %>
                                     <% @page.answers.each do |answer| %>

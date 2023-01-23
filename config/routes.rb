@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     delete 'logout', to: "sessions#destroy", as: "logout"
 
     resources :subjects, shallow: true, only: [:index, :create], param: "slug" do
-        resources :lessons, only: [:new, :create, :index, :edit, :destroy, :update, :show], param: "lesson_slug" do
+        resources :lessons, only: [:create, :index, :edit, :destroy, :update, :show], param: "lesson_slug" do
         end
         resources :lessons, param: "slug" do 
             get "index_show" # to 'lessons#index_show' action.

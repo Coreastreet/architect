@@ -4,7 +4,7 @@ export default class extends Controller {
 
   //static targets = [ "name" ]
   static targets = [ "imageBox", "imageInput", "imageBox2", "imageInput2", "selectedLesson", "objectivesBox",
-                     "editLessonProblemForm", "editLessonSummaryForm", "editLessonPageForm", 
+                     "editLessonProblemForm", "editLessonSummaryForm", "editLessonPageForm", "editLessonForm",
                      "pageUpdateButtons", "pageEditButtons", "summaryKeyPointsInput", 
                      "newSummaryKeyPoint", "summarySourcesInput", "newSummarySource" ]
 
@@ -75,6 +75,15 @@ export default class extends Controller {
         edit_buttons.classList.remove("hidden");
     }
     
+    // updating lessons for instant title reload; skipping turbo.
+
+    updateLesson() {
+        var lesson_form = this.editLessonFormTarget;
+        lesson_form.submit();
+    }
+
+    // updating lesson pages
+
     updateLessonPage() {
         var page_form = this.editLessonPageFormTarget;
         page_form.submit();

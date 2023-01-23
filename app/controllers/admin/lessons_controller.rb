@@ -8,14 +8,11 @@ class Admin::LessonsController < ApplicationController
       @subject = Subject.find_by(title: subject_title_param)
   end
 
-  def create
-      lesson_params[:title].capitalize!
+  def create 
       @subject = Subject.find_by(title: subject_title_param)
-      full_lesson_params = lesson_params.merge(subject_id: @subject.id)
-      full_lesson_params[:objectives] = JSON.parse(full_lesson_params[:objectives])
-
-      Lesson.create!(full_lesson_params)
-      redirect_to admin_subject_lessons_path(@subject)
+      @lesson = Lesson.create!(title: "Untitled lesson", subtitle: "Fill me in", 
+                    description: "Fill me in too", objectives: ["Obj 1", "Obj 2", "Obj 3"], subject_id: @subject.id)
+      redirect_to admin_lesson_index_show_path(@lesson)
   end
 
   def show 
@@ -48,7 +45,7 @@ class Admin::LessonsController < ApplicationController
       lesson_params[:title].capitalize!
       lesson.update!(lesson_params)
 
-      redirect_to admin_lesson_path(lesson)
+      redirect_to admin_lesson_index_show_path(lesson)
   end
 
   def destroy
@@ -56,8 +53,9 @@ class Admin::LessonsController < ApplicationController
       lesson.destroy!
 
       subject = lesson.subject
+      first_lesson = Lesson.find(subject.lesson_id_order[0])
 
-      redirect_to admin_subject_lessons_path(subject)
+      redirect_to admin_lesson_index_show_path(first_lesson)
   end
 
   private 

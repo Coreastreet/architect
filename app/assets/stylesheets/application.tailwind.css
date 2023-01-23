@@ -84,7 +84,7 @@
       }
 
       .lesson_page_button.selected {
-        @apply bg-emerald-50 border-r border-y border-l-4 border-[#296e01];
+        @apply bg-emerald-50 border-r border-y border-l-4 border-[#296e01] pointer-events-none cursor-default no-underline text-black;
       }
 
       .lesson_page_buttons > div {

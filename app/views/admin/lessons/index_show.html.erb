@@ -4,19 +4,19 @@
             <span class="text-2xl font-bold align-center"><%= @subject.title %></span>
         </div>
         <div class="flex justify-between pb-6 mr-4">
-            <span class="text-xl self-center"><%= @lessons.count %> Lessons</span>
-            <%= link_to "+ New", new_admin_subject_lesson_path(@subject), 
-                data: { turbo_frame: "new_lesson" }, class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded py-1 px-4" %>
+            <span class="text-xl self-center"><%= pluralize(@lessons.count, 'Lesson') %></span>
+            <%= button_to "+ New", admin_subject_lessons_path(@subject), method: :post, 
+                class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded py-1 px-4" %>
         </div>
         <div class="flex flex-col flex-nowrap items-end overflow-y-scroll flex-1">
             <% @lessons.each do |lesson| %>
                     <%= link_to admin_lesson_path(lesson), class: "mb-3 w-[15rem] group rounded px-6 py-2 shadow-md lesson_page_button
-                                flex items-center flex-col h-fit" + ((lesson.id == @lesson.id) ? " selected" : " unselected"), data: { turbo_frame: "show_lesson", action: "click->admin#select_button" } do %>
-                                <div class="w-full flex justify-between items-center">
-                                    <span class="text-xl font-semibold group-hover:underline flex-1">
-                                        <%= lesson.title.capitalize %>
-                                    </span>
-                                </div>
+                            flex items-center flex-col h-fit" + ((lesson.id == @lesson.id) ? " selected" : " unselected"), data: { turbo_frame: "show_lesson", action: "click->admin#select_button" } do %>
+                            <div class="w-full flex justify-between items-center">
+                                <span class="text-xl font-semibold group-hover:underline flex-1">
+                                    <%= lesson.title.capitalize %>
+                                </span>
+                            </div>
                     <% end %>
             <% end %>
         </div>

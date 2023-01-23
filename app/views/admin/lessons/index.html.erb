@@ -1,18 +1,19 @@
 <div class="flex flex-row px-6 pb-8">
-    <div class="flex flex-col mx-4 mt-6">
-        <div class="flex pb-4 mr-4 justify-center">
-            <span class="text-2xl font-bold align-center"><%= @subject.title %></span>
+    <div class="flex flex-col mx-4 mt-6 w-full">
+        <div class="flex pb-4 mr-4 justify-between">
+            <div class="flex mb-4">
+                <%= link_to "Subjects", admin_subjects_path, class: "font-light text-2xl hover:underline hover:text-blue-700" %>
+                <span class="px-2 font-light text-2xl">></span>
+                <span class="text-2xl font-bold align-center"><%= @subject.title %></span>
+                <span class="text-xl self-center pl-2">(<%= @lessons.count %> Lessons)</span>
+            </div>
+            <%= button_to "+ New", admin_subject_lessons_path(@subject), method: :post, 
+                class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded py-1 px-4" %>
         </div>
-        <div class="flex justify-between pb-6 mr-4">
-            <span class="text-xl self-center"><%= @lessons.count %> Lessons</span>
-            <%= link_to "+ New", new_admin_subject_lesson_path(@subject), 
-                data: { turbo_frame: "new_lesson" }, class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded py-1 px-4" %>
-        </div>
-        <div class="flex flex-col flex-nowrap items-end overflow-y-scroll flex-1">
+        <div class="flex flex-row flex-1">
             <% @lessons.each_with_index do |lesson, index| %>
-                    <%= link_to admin_lesson_path(lesson), class: "mb-3 w-[15rem] group rounded px-6 py-2 shadow-md lesson_page_button
-                                flex items-center flex-col h-fit " + (((index == 0) && (@first_lesson.present?)) ? "selected" : "unselected"), 
-                                data: { turbo_frame: "show_lesson", action: "click->admin#select_button" } do %>
+                    <%= link_to admin_lesson_index_show_path(lesson), class: "mr-4 mb-3 w-[15rem] group rounded px-6 py-2 shadow-md lesson_page_button
+                                flex items-center flex-col h-fit unselected" do %>
                                 <div class="w-full flex justify-between items-center">
                                     <span class="text-xl font-semibold group-hover:underline flex-1">
                                         <%= lesson.title.capitalize %>
@@ -22,14 +23,16 @@
             <% end %>
         </div>
     </div>
+    <!--
     <% if (@first_lesson.present?) %>
-        <%= turbo_frame_tag "show_lesson" do %>
-            <%= turbo_frame_tag @lesson do %>
-                <%= render partial: 'show', locals: { lesson: @first_lesson, subject: @subject } %>
+        <% turbo_frame_tag "show_lesson" do %>
+            <% turbo_frame_tag @lesson do %>
+                <% render partial: 'show', locals: { lesson: @first_lesson, subject: @subject } %>
             <% end %>
         <% end %>
     <% else %>    
-        <%= turbo_frame_tag "show_lesson", target: "_top" %>           
+        <% turbo_frame_tag "show_lesson", target: "_top" %>           
     <% end %>
-    <%= turbo_frame_tag "new_lesson", target: "_top" %>           
+    <% turbo_frame_tag "new_lesson", target: "_top" %>    
+     -->       
 </div>
