@@ -2,6 +2,12 @@ class ProblemController < ApplicationController
   def show
     @lesson = Lesson.find_by(title: lesson_title_param)
     @problem = @lesson.problem
+    @summary = @lesson.summary
+
+    @lesson_pages = LessonPage.find(@lesson.page_id_order)
+    @subject = @lesson.subject
+    @current_page = "problem"
+
     @image = @problem.image
   end
 

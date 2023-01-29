@@ -1,0 +1,42 @@
+<div data-lesson-nav-target="pageList" class="overflow-y-scroll flex-col p-4 absolute h-[50vh] bottom-[-50vh] border-8 w-full border-slate-300 bg-white hidden">
+    <div class="text-lg font-light ">
+        <%= link_to "Subjects", admin_subjects_path, class: "hover:underline hover:text-blue-700" %>
+        <span> > </span>
+        <%= link_to "#{subject.title}", admin_subject_lessons_path(subject), class: "hover:underline hover:text-blue-700" %>
+    </div>        
+    <div class="flex flex-wrap items-center">
+        <span class="text-2xl pr-2"><%= lesson.title %></span>
+        <span class="text-xl font-light">(<%= pluralize(lesson.page_id_order.count + 2, 'page') %>)</span>
+    </div>
+    <ul class="list-disc text-lg ml-6 pl-6 pt-4 flex flex-1 flex-col">
+        <% if (current_page == "problem") %>
+            <li class="border-l-[#3949ab] border-slate-300 border-l-4 border-y border-r bg-indigo-50 p-2">Problem
+            </li>
+        <% else %>
+            <li class="hover:underline hover:text-blue-700 hover:bg-indigo-50">
+                <%= link_to "#{problem.title}", problem_path(lesson), class: "w-full p-2 flex" %>
+            </li>
+        <% end %>
+        <ol class="list-decimal">
+            <% lesson_pages.each.with_index(1) do |lesson_page, index| %>
+                <% if (current_page == "page_#{lesson_page.id}") %>
+                    <li class="border-l-[#3949ab] border-slate-300 border-l-4 border-y border-r bg-indigo-50 p-2">
+                        <%= lesson_page.title %>
+                    </li>
+                <% else %>
+                    <li class="hover:underline hover:text-blue-700 hover:bg-indigo-50">
+                        <%= link_to "#{lesson_page.title}", lesson_page_path(lesson, index), class: "w-full p-2 flex" %>
+                    </li>
+                <% end %>
+            <% end %>
+        </ol>
+        <% if (current_page == "summary") %>
+            <li class="border-l-[#3949ab] border-slate-300 border-l-4 border-y border-r bg-indigo-50 p-2">Summary
+            </li>
+        <% else %>
+            <li class="hover:underline hover:text-blue-700 hover:bg-indigo-50">
+                <%= link_to "Summary", summary_path(lesson), class: "w-full p-2 flex" %>
+            </li>
+        <% end %>
+    </ul>
+</div>

@@ -25,11 +25,12 @@ class Admin::SubjectsController < ApplicationController
   end
 
   def update
-    subject = Subject.find_by(title: subject_title_param)
+    @subject = Subject.find_by(title: subject_title_param)
     # capitalize title before saving
     subject_params[:title].capitalize!
-    subject.update!(subject_params)
-
+    @subject.update!(subject_params)
+    
+    flash[:notice] = 'Subject updated successfully'
     redirect_to admin_subjects_path
   end
 

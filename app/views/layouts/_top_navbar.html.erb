@@ -1,7 +1,11 @@
-<nav class="flex items-center justify-center flex-wrap bg-black py-3 px-10">
-    <div class="flex items-center text-white flex-shrink-0">
-      <span class="text-xl tracking-tight text-emerald-200">For Developers</span>
+<nav class="flex items-center flex-wrap bg-black py-3 px-10 flex-col md:flex-row" data-controller="navbar">
+    <%= link_to root_path, class:"flex md:justify-start justify-center flex-shrink-0 flex-1 md:flex-none md:pr-6 " do %>
+      <svg class="fill-white h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+      <span class="font-semibold text-xl text-white tracking-tight">Factory Man</span>
+    <% end %>
+    <div class="flex md:justify-start justify-center flex-1 text-white flex-shrink-0">
+      <%= link_to "About", about_path, class: "text-xl tracking-tight " + ((@home_page == "about") ? "text-emerald-200" : "text-slate-300"), data: { action:"click->navbar#select_link" } %>
       <span class="px-4 text-xl">/</span>
-      <span class="text-xl tracking-tight text-slate-300">For Recruiters</span>
+      <%= link_to "For Recruiters", recruiters_path, class: "text-xl tracking-tight " + ((@home_page == "recruiters") ? "text-emerald-200" : "text-slate-300"), data: { action:"click->navbar#select_link" } %>
     </div>
 </nav>

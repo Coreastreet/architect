@@ -1,4 +1,27 @@
-<div>
-  <h1 class="font-bold text-4xl">Admin::Subjects#update</h1>
-  <p>Find me in app/views/admin/subjects/update.html.erb</p>
-</div>
+<%= turbo_frame_tag @subject do %>
+    <%= form_with(model: @subject, scope: :subject, method: :patch, url: admin_subject_path(@subject), 
+    class: "px-6 flex flex-col min-w-[35rem] w-[70vw]") do |f| %>
+        <div class="border-2 rounded p-6 shadow-md bg-white flex flex-col items-center overflow-y-scroll overflow-x-hidden max-h-[35rem]">
+            <div class="flex justify-between w-full align-center"><!--
+                <div class="mr-4 pt-1 text-xl font-semibold group-hover:underline flex-1 flex flex-col justify-between min-w-0">
+                    <%= f.text_field :title, class: "text-lg 
+                        max-w-md border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                    <%= f.text_field :subtitle, class: "mt-1.5 rounded text-lg
+                        max-w-6xl border-0 border-b border-solid border-blue-900 focus:border-0 focus:border-blue-900" %>
+                </div>-->
+                <label for="subject_image_uploads" class="flex items-center flex-0 w-fit hover:cursor-pointer">
+                    <% if @subject.image.representable? %>
+                        <%= image_tag(@subject.image.representation(resize_to_limit: [300, 300]), data: { 'admin-target':'imageBox' },
+                         class: "object-contain max-h-20") %>
+                        <%= f.file_field :image, type: "file", id: "subject_image_uploads", accept: ".png, .jpeg, .jpg", 
+                            class: "image_file hidden", data: { 'action': 'change->admin#display_image', 'admin-target':'imageInput' } %>
+                    <% end %>
+                </label>
+            </div>
+        </div>
+        <div class="ml-6 flex mt-4 justify-end">
+            <%= f.submit "Update subject", class: "btn-blue px-4 py-2 border-black text-md rounded mr-4" %>
+            <%= link_to 'Cancel', admin_subjects_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+        </div>
+    <% end %>
+<% end %>

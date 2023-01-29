@@ -32,8 +32,10 @@
                     <%= button_to "New Theory Point", admin_lesson_page_theory_points_path(@page), method: :post,
                             data: { turbo_frame: "edit_lesson_page" }, class: "btn btn-blue border-black bg-slate-grey text-md font-light rounded mr-2" %>
                     <%= link_to "Preview", lesson_page_path(@lesson, (@lesson.page_id_order.index(@page.id)+1)), class: "btn btn-blue text-md font-light rounded mr-2" %>
-                    <%= link_to "Delete", admin_lesson_page_path(@page), data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" },
-                        class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                    <% if (@lesson.page_id_order.count > 1) %>
+                        <%= link_to "Delete", admin_lesson_page_path(@page), data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" },
+                            class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 border-black bg-slate-grey text-md rounded" %>
+                    <% end %>
                 </div>
             </span>
         </div>

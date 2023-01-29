@@ -6,6 +6,13 @@ class LessonPagesController < ApplicationController
       @page = LessonPage.find(@lesson.page_id_order[(@page_index - 1)])
       @theory_points = @page.theory_points.order(:order_index)
       @exercises = @page.exercises
+
+      @subject = @lesson.subject
+      @lesson_pages = LessonPage.find(@lesson.page_id_order)
+      @problem = @lesson.problem
+      @summary = @lesson.summary
+
+      @current_page = "page_#{@page.id}"
   end
 
   private

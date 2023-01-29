@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   end
   # Defines the root path route ("/")
   root to: "subjects#index" 
+  get '/about', to: "pages#about", as: "about"
+  get '/recruiters', to: "pages#recruiters", as: "recruiters"
+
   get '/:subject_slug/lessons', to: "lessons#index_by_subject", as: 'lessons' 
   get '/lesson/:lesson_slug', to: "lessons#show", as: 'lesson'
   get '/lesson/:lesson_slug/problem', to: "problem#show", as: 'problem'

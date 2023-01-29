@@ -1,5 +1,5 @@
 <div data-controller="flash" id="flash" class="flex items-center fixed bottom-4 left-6 py-3 px-5 bg-[#DCF2D4]">
-    <div class="mr-4 value-holder"><%= flash[:notice] %></div>
+    <div class="mr-4 value-holder"><%= (flash[:notice] || @message) %></div>
 
     <button type="button" data-action="flash#dismiss">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

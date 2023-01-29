@@ -1,17 +1,44 @@
-<div class="title py-6 text-center text-4xl bg-slate-200">
-<div class="py-6">Summary</div>
+<nav class="sticky top-0 flex justify-between bg-zinc-100 items-center" data-controller="lesson-nav">
+    <div class="md:static relative w-full flex justify-between">
+        <%= link_to "< Prev", lesson_page_path(@lesson, @last_page_index),
+        class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <div data-action="click->lesson-nav#toggle_page_list" class="static md:relative flex-1 flex justify-center md:max-w-[30rem]">
+            <div class="justify-center  items-center h-full hover:cursor-pointer hover:bg-sky-100 flex flex-1">
+                <%= image_tag(image_path('page_list.png'), class: "object-fill pr-2") %>
+                <span class="text-xl hidden sm:inline"><%= @lesson.title %></span>
+            </div>
+            <%= render partial: "shared/page_list", locals: { lesson: @lesson, subject: @subject, lesson_pages: @lesson_pages, 
+                        problem: @problem, summary: @summary, current_page: @current_page } %>
+        </div>
+        <% if @next_lesson.present? %>
+            <%= link_to "Next >", problem_path(@next_lesson),
+            class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% else %>
+            <%= link_to "Home", root_path,
+            class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% end %>
+    </div>
+</nav>
+<div class="title py-6 text-center text-2xl md:text-4xl bg-slate-200">
+    <div class="md:py-6">Summary</div>
 </div>
-<div class="bg-[#F7FCFC] flex md:flex-row flex-col p-6">
-    <% if @aftermath_image.representable? %>
-        <%= image_tag @aftermath_image.representation(resize_to_limit: [300, 300]), 
-            class: "object-fill p-8" %>
-    <% else %>
-        <%= image_tag(image_path('upload_image.png'), class: "object-fill p-8") %>
-    <% end %>
-    <div class="flex-1 pt-10 px-16 flex flex-col justify-between align-center">
-        <div class="text-xl text-center">Aftermath:</div>
-        <div class="p-2 text-lg flex-1 text-center">
-                <%= @summary.aftermath.capitalize %>
+<div class="bg-[#F7FCFC] flex md:flex-row flex-col pb-6">
+    <div class="flex flex-col md:px-10 mb-4 md:flex-row pt-6 md:pt-10">
+        <div class="mx-10 flex flex-col items-center">
+            <figure class="max-w-[35vw]">
+                <% if @aftermath_image.representable? %>
+                    <%= image_tag @aftermath_image.representation(resize_to_limit: [300, 300]), 
+                        class: "object-fill mx-0" %>
+                <% else %>
+                    <%= image_tag(image_path('upload_image.png'), class: "object-fill p-8") %>
+                <% end %>
+            </figure>
+        </div>
+        <div class="flex-1 mx-10 flex flex-col justify-between align-center">
+            <div class="text-2xl text-center pb-6 pt-6 md:pt-0">Aftermath:</div>
+            <div class="text-lg flex-1">
+                    <%= @summary.aftermath&.capitalize %>
+            </div>
         </div>
     </div>
 </div>
@@ -20,7 +47,7 @@
         <div class="text-2xl text-center pt-4">
             Key Points:
         </div>
-        <ul class="p-6 list-disc text-lg text-center">
+        <ul class="p-6 list-disc text-lg">
             <% @summary.key_points.each do |key_point| %>
                 <li><%= key_point %></li>
             <% end %>
@@ -70,23 +97,12 @@
         <div class="text-2xl text-center pt-4">
             Further Reading:
         </div>
-        <ul class="p-6 list-disc text-lg text-center">
+        <ul class="p-6 list-disc text-lg">
             <% @summary.sources.each do |source| %>
                 <li><%= link_to source, source, class: "hover:underline hover:text-blue-400" %></li>
             <% end %>
         </ul>
     </div>
-</div>
-<div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
-    <%= link_to "< Prev", lesson_page_path(@lesson, @last_page_index),
-    class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-    <% if @next_lesson.present? %>
-        <%= link_to "Next lesson", problem_path(@next_lesson),
-        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-    <% else %>
-        <%= link_to "Return to Home", root_path,
-        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-    <% end %>
 </div>
 
 

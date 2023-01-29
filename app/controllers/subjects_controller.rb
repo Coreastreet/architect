@@ -7,6 +7,7 @@ class SubjectsController < ApplicationController
 
   def index
     @subjects = Subject.all
+    @home_page = "subjects"
   end
 
   def update

@@ -1,33 +1,13 @@
 
-<div class="bg-slate-200 flex p-10">
-    <h1 class="text-3xl font-semibold text-center">
-        A free reference for IT workers looking to learn about the essentials of DevOps.
+<div class="bg-slate-200 flex md:p-10 px-4 py-6">
+    <h1 class="text-2xl md:text-3xl md:font-semibold text-center w-full">
+        Software Architecture
     </h1>       
 </div> 
-<div id="Search_subjects" class="px-10 ">
-    <div class="py-6 text-center">
-            <span class="h3 block mb-4">
-                "Don't study hard, study smart."
-            </span>
-            <span>
-                Subject lessons in the Factory Man pages are designed specifically
-                for beginners new to Devops and IT career-changers. 
-                Each lesson starts with a real world scenario and ends with explanation
-                of how the applying the theory taught can result in cost savings. 
-            </span>
-    </div>
-    <div class="flex justify-center mb-6">
-        <div class="flex-1 text-center py-6 border border-black rounded">
-            Problem    
-        </div>
-        <div class="flex-1 text-center py-6 border border-black rounded">Theory</div>
-        <div class="flex-1 text-center py-6 border border-black rounded">
-            Time/Cost savings
-        </div>
-    </div>
+<div id="Search_subjects" class="flex flex-col md:px-10 pt-6 pb-2">
     <% @subjects.each do |subject| %>
-            <%= link_to lessons_path(subject), class: "border-2 group rounded mx-10 p-6 shadow-md hover:shadow-lg hover:border 
-                    hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col my-4" do %>
+            <%= link_to lessons_path(subject), class: "border-2 group rounded p-6 shadow-md hover:shadow-lg hover:border 
+                    hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col mb-4 mx-4" do %>
                 <div class="flex justify-between align-center">
                     <span class="text-xl font-semibold group-hover:underline flex-1">
                         <%= subject.title.capitalize %>

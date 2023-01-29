@@ -1,26 +1,42 @@
-<div class="title py-6 text-center text-4xl bg-slate-200">
-  <div class="py-6"><%= @problem.title %></div>
+<nav class="sticky top-0 flex justify-between bg-zinc-100 items-center" data-controller="lesson-nav">
+    <div class="md:static relative w-full flex justify-between">
+        <%= link_to "Next >", '#',
+            class:"invisible px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <div data-action="click->lesson-nav#toggle_page_list" class="static md:relative flex-1 flex justify-center md:max-w-[30rem]">
+            <div class="justify-center items-center h-full hover:cursor-pointer hover:bg-sky-100 flex flex-1">
+                <%= image_tag(image_path('page_list.png'), class: "object-fill pr-2") %>
+                <span class="text-xl hidden sm:inline"><%= @lesson.title %></span>
+            </div>
+            <%= render partial: "shared/page_list", locals: { lesson: @lesson, subject: @subject, lesson_pages: @lesson_pages, 
+                problem: @problem, summary: @summary, current_page: @current_page } %>
+        </div>
+        <%= link_to "Next >", lesson_page_path(@lesson, 1),
+            class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+    </div>
+</nav>
+<div class="title py-6 text-center text-2xl md:text-4xl bg-slate-200">
+  <div class="md:py-6"><%= @problem.title %></div>
 </div>
-<div class="flex md:flex-row flex-col p-6 m-10">
-      <figure class="flex-1 flex flex-col justify-center">
+<div class="flex lg:flex-row flex-col m-10 px-0 md:px-6">
+      <figure class="flex-shrink-0 md:mr-6 flex flex-col justify-center">
         <% if @image.representable? %>
-            <%= image_tag @image.representation(resize_to_limit: [300, 300]), class: "flex-1 object-contain" %>
+            <%= image_tag @image.representation(resize_to_limit: [400, 400]), class: "flex-1 object-contain" %>
         <% end %>
       </figure>
-      <div class="flex-1 py-8 px-16 flex flex-col justify-between align-center">
-          <div class="text-3xl font-light text-center pb-6"><%= @problem.image_subtitle %></div>
-          <div class="p-2 text-lg flex-1 text-center">
+      <div class="flex-1 md:ml-6 flex flex-col justify-between align-center">
+          <div class="text-3xl font-light pt-6 md:pt-0 pb-6"><%= @problem.image_subtitle %></div>
+          <div class="text-lg flex-1">
                 <%= @problem.description.capitalize %>
           </div>
       </div>
 </div>
 <div class="bg-[#F7FCFC] flex flex-col md:flex-row">
-    <div class="px-16 py-6 flex flex-col items-center flex-1 bg-[beige]">
-        <div class="text-2xl text-center pt-4">
-            <div class="sb1"><%= @problem.simon_says %></div>
+    <div class="px-10 md:px-16 py-6 flex flex-col items-center flex-1 bg-[beige]">
+        <div class="text-2xl pt-4">
+            <div class="sb1 px-6 py-8"><%= @problem.simon_says %></div>
         </div>
     </div>
-    <div class="mx-10 p-6 flex flex-col items-center flex-1">
+    <div class="mx-10 px-0 md:px-6 py-6 flex flex-col items-center flex-1">
         <div class="text-2xl text-center pt-4">
             Did you know?
         </div>
@@ -28,10 +44,5 @@
             <%= @problem.did_you_know %>
         </div>
     </div>
-</div>
-<div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
-    <div class="flex-0"></div>
-    <%= link_to "Next >", lesson_page_path(@lesson, 1),
-        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
 </div>
 

@@ -59,6 +59,9 @@ group :development, :test do
   # for recording the password for psql.
   gem 'dotenv-rails'
   
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
 end
 
 group :development do

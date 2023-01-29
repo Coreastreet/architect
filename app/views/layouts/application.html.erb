@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Architect</title>
+    <title>SystemClassroom</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,9 +11,7 @@
   </head>
 
   <body class="min-h-screen flex flex-col">
-    <%= render "layouts/sidenav" %> 
     <%= render "layouts/top_navbar" %> 
-    <%= render "layouts/main_navbar" %> 
     <main class="flex-col flex-grow">
       <%= yield %>
     </main>

@@ -1,10 +1,38 @@
-<div class="title py-6 text-center text-4xl bg-slate-200">
-  <div class="py-6 editable"><%= @page.title %></div>
+<div id="left_nav_bar" class="absolute h-[30rem] left-0 top-0 bg-emerald-500"> 
+
+</div>
+<nav class="sticky top-0 flex bg-zinc-100 items-center" data-controller="lesson-nav">
+    <div class="md:static relative w-full flex justify-between">
+        <% if (@page_index == 1) %>
+            <%= link_to "< Prev", problem_path(@lesson),
+                class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% else %>
+            <%= link_to "< Prev", lesson_page_path(lesson, (@page_index-1)),
+            class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% end %>
+        <div data-action="click->lesson-nav#toggle_page_list" class="static md:relative flex-1 flex justify-center md:max-w-[30rem]">
+            <div class="justify-center items-center h-full hover:cursor-pointer hover:bg-sky-100 flex flex-1">
+                <%= image_tag(image_path('page_list.png'), class: "object-fill pr-2") %>
+                <span class="text-xl hidden sm:inline"><%= @lesson.title %></span>
+            </div>
+            <%= render partial: "shared/page_list", locals: { lesson: @lesson, subject: @subject, lesson_pages: @lesson_pages, problem: @problem, 
+                summary: @summary, current_page: @current_page } %>
+        </div>
+        <% if (@page_index >= @lesson.page_id_order.count) %>
+            <%= link_to "Next >", summary_path(@lesson),
+            class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% else %>
+            <%= link_to "Next >", lesson_page_path(@lesson, (@page_index+1)),
+                class:"hover:bg-sky-100 px-4 py-2 md:py-4 flex-0 border-black bg-slate-grey md:text-2xl text-xl font-light rounded" %>
+        <% end %>
+    </div>
+</nav>
+<div class="title py-6 text-center text-2xl md:text-4xl bg-slate-200">
+  <div class="md:py-6 editable"><%= @page.title %></div>
 </div>
 <% @theory_points.each_with_index do |theory_point, index| %>  
-<% if (index.even?) %>
-  <div class="py-6 bg-[#F7FCFC]">
-      <div class="flex flex-col md:flex-row mb-4">
+  <div class="pb-6 bg-[#F7FCFC]">
+      <div class='<%= "flex flex-col md:px-10 mb-4 " + ((index.even?) ? "md:flex-row" : "md:flex-row-reverse") + " pt-6 md:pt-10" %>'>
           <div class="mx-10 flex flex-col items-center">
               <figure class="max-w-[35vw]">
                   <% if theory_point.image.representable? %>
@@ -15,40 +43,16 @@
                   <% end %>
               </figure>
           </div>
-          <div class="mr-10 pb-6 flex flex-col items-center flex-1">
-              <div class="text-2xl text-center pt-1">
+          <div class="mx-10 flex flex-col items-center flex-1">
+              <div class="text-2xl text-center pb-6 pt-6 md:pt-0">
                   <%= theory_point.title %>
               </div>
-              <div class="w-full pt-4 text-md">
+              <div class="w-full text-md">
                   <%= theory_point.description&.capitalize %>
               </div>
           </div>
       </div>
   </div>
-<% else %>
-      <div class="py-6 bg-white">
-          <div class="flex flex-col md:flex-row mb-4 ">
-                  <div class="mx-10 pb-6 flex flex-col items-center flex-1">
-                      <div class="text-2xl text-center pt-1">
-                          <%= theory_point.title %>
-                      </div>
-                      <div class="pt-4 text-md w-full">
-                          <%= theory_point.description&.capitalize %>
-                      </div>
-                  </div>
-                  <div class="mr-10 flex flex-col items-center">
-                      <figure class="max-w-[35vw]">
-                          <% if theory_point.image.representable? %>
-                              <%= image_tag(theory_point.image.representation(resize_to_limit: [300, 300]),
-                                  class: "object-fill") %>
-                          <% else %>
-                              <%= image_tag(image_path('upload_image.png'), class: "object-fill") %>
-                          <% end %>
-                      </figure>
-                  </div>
-          </div>
-      </div>
-  <% end %>
 <% end %>
 <hr class="bg-slate-300 border-slate-300">
 <div class="p-6 flex flex-1 flex-col items-center bg-[#F7FCFC]">
@@ -79,20 +83,4 @@
             </div>
         <% end %>
   </div>
-</div>
-<div class="flex justify-between bg-zinc-100 items-center px-6 py-3">
-  <% if (@page_index == 1) %>
-      <%= link_to "< Prev", problem_path(@lesson),
-       class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-  <% else %>
-      <%= link_to "< Prev", lesson_page_path(@lesson, (@page_index-1)),
-      class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-  <% end %>
-  <% if (@page_index >= @theory_points.count) %>
-      <%= link_to "Next >", summary_path(@lesson),
-      class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-  <% else %>
-    <%= link_to "Next >", lesson_page_path(@lesson, (@page_index+1)),
-        class:"flex-0 btn btn-blue border-black bg-slate-grey text-2xl font-light rounded-xl" %>
-  <% end %>
 </div>

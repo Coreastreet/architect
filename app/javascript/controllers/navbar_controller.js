@@ -11,6 +11,15 @@ export default class extends Controller {
     //sidebar.classList.replace("left-0", "left-40");
   }
 
+  select_link(event) {
+    var link = event.target;
+    var children = link.parentElement.children
+    for (var element of children) {
+        element.classList.remove("text-emerald-200");
+    };
+    
+    link.classList.add("text-emerald-200");
+  }
   //get slideOut() {
   //    return this.nameTarget.value
   // }

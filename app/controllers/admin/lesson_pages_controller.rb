@@ -68,7 +68,7 @@ class Admin::LessonPagesController < ApplicationController
       @lesson.update(page_id_order: index_arr)
     end
 
-    flash[:notice] = 'Lesson updated successfully'
+    flash[:notice] = 'Lesson Page updated successfully'
     redirect_to admin_lesson_page_path(@page)
   end
 

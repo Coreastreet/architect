@@ -8,7 +8,7 @@
         <span class="font-light">
             Brought to you by 
         </span>
-        <%= link_to 'Justin', admin_login_path, class: "underline" %> 
-        <span class="font-light"> - Aspiring Devops Engineer</span>
+        <%= link_to 'Justin', ((logged_in_as_creator?) ? admin_subjects_path : admin_login_path), class: "underline" %> 
+        <span class="font-light"> - Aspiring Software Architect</span>
     </div>
 </div>

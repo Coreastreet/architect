@@ -45,6 +45,7 @@ class Admin::LessonsController < ApplicationController
       lesson_params[:title].capitalize!
       lesson.update!(lesson_params)
 
+      flash[:notice] = 'Lesson updated successfully'
       redirect_to admin_lesson_index_show_path(lesson)
   end
 

@@ -1,10 +1,10 @@
 <div class="title py-6 text-center text-4xl bg-slate-200">
     Linux
 </div>
-<div class="flex flex-col pt-6">
+<div class="flex flex-col pt-6 pb-2">
     <% @lessons.each do |lesson| %>
-        <%= link_to lesson_path(lesson), class: "border-2 group rounded mx-10 p-6 shadow-md hover:shadow-lg hover:border 
-                hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col my-4" do %>
+        <%= link_to lesson_path(lesson), class: "border-2 group rounded p-6 shadow-md hover:shadow-lg hover:border 
+        hover:bg-emerald-50 hover:border-l-4 bg-white flex flex-col mx-4 mb-4" do %>
             <div class="flex justify-between align-center">
                 <span class="text-xl font-semibold group-hover:underline flex-1">
                     <%= lesson.title.capitalize %>
